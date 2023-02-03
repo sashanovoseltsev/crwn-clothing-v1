@@ -42,21 +42,22 @@ const SignUp = () => {
       );
 
       await createUserDocumentFromAuth(user, { displayName });
+      alert("user created successfully!");
+      resetFormFields();
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         alert("Cannot create user. Email already in use.");
       } else {
         console.error("user creation encountered an error", error);
+        alert(error.code);
       }
     }
-
-    resetFormFields();
   };
 
   const handleValueChanged = (event) => {
     const { name, value } = event.target;
     setFormState({ ...formState, [name]: value });
-    console.log(formState);
+    //console.log(formState);
   };
 
   return (
