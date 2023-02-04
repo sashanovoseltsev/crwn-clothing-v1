@@ -1,4 +1,3 @@
-import { Outlet } from "react-router-dom";
 import { useState, useEffect, Fragment } from "react";
 
 import CategoriesList from "../../components/categories-list/categories-list.component";

@@ -24,7 +24,14 @@
 
   &__link {
     &:link,
-    &:visited {
+    &:visited,
+    &--btn {
+      border: none;
+      display: inline-block;
+      background-color: transparent;
+      font-size: inherit;
+      font-family: inherit;
+
       text-decoration: none;
       color: #333;
       padding: 10px 15px;
@@ -34,7 +41,8 @@
     }
 
     &:hover,
-    &:active {
+    &:active,
+    &--btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 20px 40px rgba(#000, 0.2);
       background-color: #333;
