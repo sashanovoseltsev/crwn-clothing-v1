@@ -1,0 +1,46 @@
+.cart-icon {
+  width: 45px;
+  height: 45px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px rgba(#000, 0.2);
+  }
+
+  &:hover &__icon g path {
+    fill: #fff;
+  }
+
+  &:hover &__count {
+    color: #fff;
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+
+    g path {
+      fill: #333;
+
+      transition: all 0.2s;
+    }
+  }
+
+  &__count {
+    position: absolute;
+    font-size: 10px;
+    font-weight: bold;
+    bottom: 12px;
+    color: #333;
+
+    transition: all 0.2s;
+  }
+}
