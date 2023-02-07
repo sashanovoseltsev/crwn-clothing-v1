@@ -1,8 +1,10 @@
 import "./cart-item.styles.scss";
 
 const CartItem = ({ item }) => {
-  const { qnt: quantity } = item;
-  const { name, price, imageUrl } = item.item;
+  const {
+    qnt: quantity,
+    value: { name, price, imageUrl },
+  } = item;
 
   return (
     <div className="cart-item">

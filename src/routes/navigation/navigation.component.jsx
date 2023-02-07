@@ -24,17 +24,6 @@ const Navigation = () => {
     setCartState({ ...cartState });
   };
 
-  const countItems = (items) => {
-    var count = 0;
-
-    console.log(items);
-    items.forEach((v, _) => {
-      count += v.qnt;
-    });
-
-    return count;
-  };
-
   return (
     <Fragment>
       <div className="navigation">
@@ -59,12 +48,12 @@ const Navigation = () => {
             </Link>
           )}
           <CartIcon
-            count={countItems(cartState.items)}
-            onCartIconClick={handleCartIconClick}
+            count={cartState.getTotalItems()}
+            onClickHandler={handleCartIconClick}
           />
         </div>
         <CartDropdown
-          cartItems={cartState.items}
+          cartItems={[...cartState.items.values()]}
           isOpened={cartState.isOpened}
         />
       </div>

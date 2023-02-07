@@ -9,7 +9,12 @@ import "./shop.styles.scss";
 const Shop = () => {
   const { products } = useContext(ProductsContext);
 
-  const { addItem } = useContext(CartContext);
+  const { cartState, setCartState } = useContext(CartContext);
+
+  const addItem = (product) => {
+    cartState.addItem(product);
+    setCartState({ ...cartState });
+  };
 
   return (
     <div className="products-container">

@@ -1,36 +1,48 @@
 import { createContext, useState } from "react";
 
-export const CartContext = createContext({
-  cartState: {
-    items: new Map(),
-    isOpened: false,
-  },
-  setCartState: () => {},
-  addItem: () => {},
-});
+function addItem(item) {
+  const { id } = item;
+
+  const foundItem = this.items.get(id);
+  if (!foundItem) {
+    this.items.set(id, { value: item, qnt: 1 });
+  } else {
+    this.items.set(id, { ...foundItem, qnt: ++foundItem.qnt });
+  }
+}
+
+function getTotalItems() {
+  var count = 0;
+
+  this.items.forEach(({ qnt }, _) => {
+    count += qnt;
+  });
+
+  return count;
+}
+
+// export const CartContext = createContext({
+//   cartState: {
+//     items: new Map(),
+//     isOpened: false,
+//     addItem: () => {},
+//     getTotalItems: () => {},
+//   },
+//   setCartState: () => {},
+// });
+
+// If we can provide just empty object as default context, then why define example structure?
+export const CartContext = createContext({});
 
 export const CartProvider = ({ children }) => {
-  console.log("CartProvider");
-
   const [cartState, setCartState] = useState({
     items: new Map(),
     isOpened: false,
+    addItem,
+    getTotalItems,
   });
 
-  const addItem = (product) => {
-    const { id } = product;
-
-    const item = cartState.items.get(id);
-    if (!item) {
-      cartState.items.set(id, { item: product, qnt: 1 });
-    } else {
-      cartState.items.set(id, { ...item, qnt: ++item.qnt });
-    }
-    setCartState({ ...cartState });
-    console.log("product was added", product);
-  };
-
-  const value = { cartState, setCartState, addItem };
+  const value = { cartState, setCartState };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
