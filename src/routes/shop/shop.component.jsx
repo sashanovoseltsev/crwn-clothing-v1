@@ -9,13 +9,7 @@ import "./shop.styles.scss";
 const Shop = () => {
   const { products } = useContext(ProductsContext);
 
-  const { cartState, setCartState } = useContext(CartContext);
-
-  const addToCartHandler = (product) => {
-    console.log("product was added", product);
-    cartState.items.push(product);
-    setCartState(cartState);
-  };
+  const { addItem } = useContext(CartContext);
 
   return (
     <div className="products-container">
@@ -24,7 +18,7 @@ const Shop = () => {
           <Product
             key={product.id}
             product={product}
-            addToCartHandler={addToCartHandler}
+            onClickHandler={() => addItem(product)}
           />
         );
       })}

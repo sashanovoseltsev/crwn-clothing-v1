@@ -21,13 +21,18 @@ const Navigation = () => {
 
   const handleCartIconClick = () => {
     cartState.isOpened = !cartState.isOpened;
+    setCartState({ ...cartState });
+  };
 
-    // TODO: replace with deep copy
-    const newContext = {
-      isOpened: cartState.isOpened,
-      setCartState: setCartState,
-    };
-    setCartState(newContext);
+  const countItems = (items) => {
+    var count = 0;
+
+    console.log(items);
+    items.forEach((v, _) => {
+      count += v.qnt;
+    });
+
+    return count;
   };
 
   return (
@@ -53,9 +58,15 @@ const Navigation = () => {
               {"sign in "}
             </Link>
           )}
-          <CartIcon onCartIconClick={handleCartIconClick} />
+          <CartIcon
+            count={countItems(cartState.items)}
+            onCartIconClick={handleCartIconClick}
+          />
         </div>
-        <CartDropdown isOpened={cartState.isOpened} />
+        <CartDropdown
+          cartItems={cartState.items}
+          isOpened={cartState.isOpened}
+        />
       </div>
       <Outlet />
     </Fragment>
