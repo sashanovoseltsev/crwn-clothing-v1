@@ -1,6 +1,6 @@
 import "./cart-dropdown.styles.scss";
 
-import Button from "../button/button.component";
+import { Link } from "react-router-dom";
 import CartItem from "../cart-item/cart-item.component";
 
 const CartDropdown = ({ cartItems, isOpened }) => {
@@ -15,7 +15,9 @@ const CartDropdown = ({ cartItems, isOpened }) => {
       ) : (
         <p className="empty-message">Cart is empty</p>
       )}
-      <Button>Go to Checkout</Button>
+      <Link className="cart-dropdown__btn button-container" to="/checkout">
+        Go to checkout
+      </Link>
     </div>
   );
 };
