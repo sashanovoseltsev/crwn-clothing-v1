@@ -1,9 +1,18 @@
 import "./cart-dropdown.styles.scss";
 
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+import Button from "../button/button.component";
 import CartItem from "../cart-item/cart-item.component";
 
+import { useNavigate } from "react-router-dom";
+
 const CartDropdown = ({ cartItems, isOpened }) => {
+  const navigate = useNavigate();
+
+  const goToCheckoutHandler = () => {
+    navigate("/checkout");
+  };
+
   return (
     <div className={`cart-dropdown ${isOpened ? "" : "cart-dropdown--hidden"}`}>
       {cartItems.length > 0 ? (
@@ -15,9 +24,7 @@ const CartDropdown = ({ cartItems, isOpened }) => {
       ) : (
         <p className="empty-message">Cart is empty</p>
       )}
-      <Link className="cart-dropdown__btn button-container" to="/checkout">
-        Go to checkout
-      </Link>
+      <Button onClick={goToCheckoutHandler}>Go to checkout</Button>
     </div>
   );
 };
