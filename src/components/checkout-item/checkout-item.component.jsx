@@ -1,14 +1,11 @@
 import "./checkout-item.styles.scss";
 
 const CheckoutItem = ({ item, changeQuantity, removeItem }) => {
-  const {
-    qnt: quantity,
-    value: { imageUrl, name, price },
-  } = item;
+  const { imageUrl, name, price, qnt: quantity } = item;
 
   return (
     <div className="checkout-item">
-      <div class="checkout-item__img-contaienr">
+      <div className="checkout-item__img-contaienr">
         <img className="checkout-item__img" src={imageUrl} alt={name} />
       </div>
       <span className="checkout-item__text">{name}</span>

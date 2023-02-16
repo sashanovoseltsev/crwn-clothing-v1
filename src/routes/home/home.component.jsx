@@ -6,7 +6,6 @@ const Home = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    console.log("categories set");
     setCategories([
       {
         id: 1,

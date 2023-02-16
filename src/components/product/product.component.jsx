@@ -6,7 +6,9 @@ const Product = ({ product, onClickHandler }) => {
   const { name, price, imageUrl } = product;
   return (
     <div className="product">
-      <img className="product__img" src={imageUrl} alt={name} />
+      <div className="product__img-container">
+        <img className="product__img" src={imageUrl} alt={name} />
+      </div>
       <div className="product__footer">
         <p className="product__name">{name}</p>
         <p className="product__price">{price}$</p>

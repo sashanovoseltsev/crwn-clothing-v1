@@ -18,7 +18,7 @@ const CartDropdown = ({ cartItems, isOpened }) => {
       {cartItems.length > 0 ? (
         <div className="cart-items">
           {cartItems.map((item) => {
-            return <CartItem key={item.value.id} item={item} />;
+            return <CartItem key={item.id} item={item} />;
           })}
         </div>
       ) : (

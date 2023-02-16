@@ -10,7 +10,16 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  collection,
+  writeBatch,
+  query,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBWz0EvzAGlH9kr5SRpLUaQCfJlvBrcbbU",
@@ -36,6 +45,56 @@ export const signInWithGoogleRedirect = () =>
   signInWithRedirect(auth, provider);
 
 export const db = getFirestore();
+
+export const getDocumentsFromCollection = async (collectionKey) => {
+  const collectionRef = collection(db, collectionKey);
+
+  const q = query(collectionRef);
+  const querySnapshot = await getDocs(q);
+
+  const documentsMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+    const { title, items } = docSnapshot.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {});
+
+  return documentsMap;
+};
+
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd,
+  docIdObjField = "title"
+) => {
+  const collectionRef = collection(db, collectionKey);
+
+  if (
+    !(await checkDocExistsInCollection(
+      collectionRef,
+      objectsToAdd[0][docIdObjField]
+    ))
+  ) {
+    const batch = writeBatch(db);
+
+    objectsToAdd.forEach((obj) => {
+      const docRef = doc(collectionRef, obj[docIdObjField].toLowerCase());
+      batch.set(docRef, obj);
+    });
+
+    await batch.commit();
+    console.log("done");
+  } else {
+    console.log(`Collection ${collectionKey} already exists`);
+  }
+};
+
+const checkDocExistsInCollection = async (collectionRef, docId) => {
+  const docRef = doc(collectionRef, docId.toLowerCase());
+
+  const docSnapshot = await getDoc(docRef);
+
+  return docSnapshot.exists;
+};
 
 export const createUserDocumentFromAuth = async (
   userAuth,

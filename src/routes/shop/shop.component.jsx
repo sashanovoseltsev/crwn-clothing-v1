@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { ProductsContext } from "../../contexts/products.context";
+import { useContext, Fragment } from "react";
+import { CategoriesContext } from "../../contexts/categories.context";
 import { CartContext } from "../../contexts/cart.context";
 
 import Product from "../../components/product/product.component";
@@ -7,7 +7,7 @@ import Product from "../../components/product/product.component";
 import "./shop.styles.scss";
 
 const Shop = () => {
-  const { products } = useContext(ProductsContext);
+  const { categoriesMap } = useContext(CategoriesContext);
 
   const { cartState, setCartState } = useContext(CartContext);
 
@@ -16,18 +16,29 @@ const Shop = () => {
     setCartState({ ...cartState });
   };
 
+  console.log(categoriesMap);
+
   return (
-    <div className="products-container">
-      {products.map((product) => {
+    <Fragment>
+      {Object.keys(categoriesMap).map((title) => {
         return (
-          <Product
-            key={product.id}
-            product={product}
-            onClickHandler={() => addItem(product)}
-          />
+          <Fragment key={title}>
+            <h2>{title}</h2>
+            <div className="products-container">
+              {categoriesMap[title].map((product) => {
+                return (
+                  <Product
+                    key={product.id}
+                    product={product}
+                    onClickHandler={() => addItem(product)}
+                  />
+                );
+              })}
+            </div>
+          </Fragment>
         );
       })}
-    </div>
+    </Fragment>
   );
 };
 

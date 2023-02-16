@@ -9,26 +9,37 @@ const Checkout = () => {
   const items = [...cartState.items.values()];
 
   const changeQuantity = (item, qnt) => {
-    const newQnt = item.qnt + qnt;
-    if (newQnt > 0) {
-      cartState.items.set(item.value.id, { ...item, qnt: newQnt });
-      setCartState({ ...cartState });
-    }
+    cartState.changeQuantity(item, qnt);
+    setCartState({ ...cartState });
   };
 
   const removeItem = (item) => {
-    cartState.items.delete(item.value.id);
+    cartState.removeItem(item);
     setCartState({ ...cartState });
+  };
+
+  const countTotalPrice = () => {
+    return cartState.getTotalPrice();
   };
 
   return (
     <div className="checkout">
       <div className="checkout__header">
-        <span>Product</span>
-        <span>Description</span>
-        <span>Quantity</span>
-        <span>Price</span>
-        <span>Remove</span>
+        <div className="checkout__header-item">
+          <span>Product</span>
+        </div>
+        <div className="checkout__header-item">
+          <span>Description</span>
+        </div>
+        <div className="checkout__header-item">
+          <span>Quantity</span>
+        </div>
+        <div className="checkout__header-item">
+          <span>Price</span>
+        </div>
+        <div className="checkout__header-item">
+          <span>Remove</span>
+        </div>
       </div>
       {items.map((i) => {
         return (
@@ -36,17 +47,13 @@ const Checkout = () => {
             changeQuantity={changeQuantity}
             removeItem={removeItem}
             item={i}
+            key={i.id}
           />
         );
       })}
       <div className="checkout__footer">
         <span className="checkout__total">
-          TOTAL:
-          {" " +
-            items.reduce((total, el) => {
-              return total + el.qnt * el.value.price;
-            }, 0)}
-          $
+          TOTAL:{" " + countTotalPrice()}$
         </span>
       </div>
     </div>
