@@ -2,7 +2,19 @@ import "./product.styles.scss";
 
 import Button from "../button/button.component";
 
-const Product = ({ product, onClickHandler }) => {
+import { useContext } from "react";
+
+import { CartContext } from "../../contexts/cart.context";
+
+const Product = ({ product }) => {
+  const { cartState, setCartState } = useContext(CartContext);
+
+  const addItem = (product) => {
+    console.log("addItem");
+    cartState.addItem(product);
+    setCartState({ ...cartState });
+  };
+
   const { name, price, imageUrl } = product;
   return (
     <div className="product">
@@ -10,10 +22,10 @@ const Product = ({ product, onClickHandler }) => {
         <img className="product__img" src={imageUrl} alt={name} />
       </div>
       <div className="product__footer">
-        <p className="product__name">{name}</p>
-        <p className="product__price">{price}$</p>
+        <p>{name}</p>
+        <p>{price}$</p>
       </div>
-      <Button buttonType="inverted" onClick={onClickHandler}>
+      <Button buttonType="inverted" onClick={() => addItem(product)}>
         Add to cart
       </Button>
     </div>

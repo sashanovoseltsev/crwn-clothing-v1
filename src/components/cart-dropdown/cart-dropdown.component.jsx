@@ -1,6 +1,5 @@
 import "./cart-dropdown.styles.scss";
 
-// import { Link } from "react-router-dom";
 import Button from "../button/button.component";
 import CartItem from "../cart-item/cart-item.component";
 

@@ -1,0 +1,11 @@
+@import "./../../mixins.styles";
+
+.category-preview {
+  &__category-container {
+    @include products-grid();
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 40px;
+  }
+}

@@ -1,44 +1,13 @@
-import { useContext, Fragment } from "react";
-import { CategoriesContext } from "../../contexts/categories.context";
-import { CartContext } from "../../contexts/cart.context";
-
-import Product from "../../components/product/product.component";
-
-import "./shop.styles.scss";
+import { Route, Routes } from "react-router-dom";
+import CategoriesPreview from "../categories-preview/categories-preview.component";
+import Category from "../category/category.component";
 
 const Shop = () => {
-  const { categoriesMap } = useContext(CategoriesContext);
-
-  const { cartState, setCartState } = useContext(CartContext);
-
-  const addItem = (product) => {
-    cartState.addItem(product);
-    setCartState({ ...cartState });
-  };
-
-  console.log(categoriesMap);
-
   return (
-    <Fragment>
-      {Object.keys(categoriesMap).map((title) => {
-        return (
-          <Fragment key={title}>
-            <h2>{title}</h2>
-            <div className="products-container">
-              {categoriesMap[title].map((product) => {
-                return (
-                  <Product
-                    key={product.id}
-                    product={product}
-                    onClickHandler={() => addItem(product)}
-                  />
-                );
-              })}
-            </div>
-          </Fragment>
-        );
-      })}
-    </Fragment>
+    <Routes>
+      <Route index={true} element={<CategoriesPreview />} />
+      <Route path=":category" element={<Category />} />
+    </Routes>
   );
 };
 
