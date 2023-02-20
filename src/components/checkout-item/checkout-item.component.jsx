@@ -1,35 +1,31 @@
-import "./checkout-item.styles.scss";
+//import "./checkout-item.styles.scss";
+
+import { CheckoutItemContainer } from "./checkout-item.styles";
 
 const CheckoutItem = ({ item, changeQuantity, removeItem }) => {
   const { imageUrl, name, price, qnt: quantity } = item;
 
   return (
-    <div className="checkout-item">
-      <div className="checkout-item__img-contaienr">
-        <img className="checkout-item__img" src={imageUrl} alt={name} />
+    <CheckoutItemContainer>
+      <div className="img-contaienr">
+        <img className="img" src={imageUrl} alt={name} />
       </div>
-      <span className="checkout-item__text">{name}</span>
+      <span className="text">{name}</span>
 
-      <div className="checkout-item__quantity-container">
-        <span
-          className="checkout-item__btn"
-          onClick={() => changeQuantity(item, -1)}
-        >
+      <div className="quantity-container">
+        <span className="btn" onClick={() => changeQuantity(item, -1)}>
           &lsaquo;
         </span>
-        <span className="checkout-item__qnt">{quantity}</span>
-        <span
-          className="checkout-item__btn"
-          onClick={() => changeQuantity(item, 1)}
-        >
+        <span className="qnt">{quantity}</span>
+        <span className="btn" onClick={() => changeQuantity(item, 1)}>
           &rsaquo;
         </span>
       </div>
-      <span className="checkout-item__price">{price * quantity}$</span>
-      <span className="checkout-item__remove" onClick={() => removeItem(item)}>
+      <span className="price">{price * quantity}$</span>
+      <span className="remove" onClick={() => removeItem(item)}>
         &times;
       </span>
-    </div>
+    </CheckoutItemContainer>
   );
 };
 

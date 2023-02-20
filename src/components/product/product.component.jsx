@@ -1,4 +1,4 @@
-import "./product.styles.scss";
+import { ProductContainer } from "./product.styles.jsx";
 
 import Button from "../button/button.component";
 import { BUTTON_TYPES } from "../button/button.component";
@@ -18,11 +18,11 @@ const Product = ({ product }) => {
 
   const { name, price, imageUrl } = product;
   return (
-    <div className="product">
-      <div className="product__img-container">
-        <img className="product__img" src={imageUrl} alt={name} />
+    <ProductContainer>
+      <div className="img-container">
+        <img className="img" src={imageUrl} alt={name} />
       </div>
-      <div className="product__footer">
+      <div className="footer">
         <p>{name}</p>
         <p>{price}$</p>
       </div>
@@ -32,7 +32,7 @@ const Product = ({ product }) => {
       >
         Add to cart
       </Button>
-    </div>
+    </ProductContainer>
   );
 };
 

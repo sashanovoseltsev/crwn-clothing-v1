@@ -1,19 +1,21 @@
-.product {
+import styled from "styled-components";
+
+export const ProductContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  height: 380px;
+  height: 38rem;
   align-items: center;
   position: relative;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.03);
 
-  &__img-container {
+  .img-container {
     width: 100%;
     height: 85%;
     overflow: hidden;
   }
 
-  &__img {
+  .img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -24,7 +26,7 @@
     width: 80% !important;
     opacity: 0.7;
     position: absolute;
-    top: 255px;
+    top: 25.5rem;
     display: none;
     transition: all 0.2s;
   }
@@ -35,7 +37,7 @@
 
   &:hover {
     img {
-      filter: blur(3px) brightness(80%);
+      filter: blur(0.3rem) brightness(80%);
       transform: scale(1.2);
     }
 
@@ -45,12 +47,12 @@
     }
   }
 
-  &__footer {
+  .footer {
     width: 100%;
     height: 15%;
     display: flex;
     justify-content: space-between;
-    font-size: 18px;
-    padding: 0 5px;
+    font-size: 1.8rem;
+    padding: 0 0.5rem;
   }
-}
+`;

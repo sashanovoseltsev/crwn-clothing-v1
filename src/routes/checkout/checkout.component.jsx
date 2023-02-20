@@ -1,4 +1,4 @@
-import "./checkout.styles.scss";
+import { CheckoutContainer } from "./checkout.styles.jsx";
 
 import { useContext } from "react";
 import { CartContext } from "../../contexts/cart.context";
@@ -23,21 +23,21 @@ const Checkout = () => {
   };
 
   return (
-    <div className="checkout">
-      <div className="checkout__header">
-        <div className="checkout__header-item">
+    <CheckoutContainer>
+      <div className="header">
+        <div className="header-item">
           <span>Product</span>
         </div>
-        <div className="checkout__header-item">
+        <div className="header-item">
           <span>Description</span>
         </div>
-        <div className="checkout__header-item">
+        <div className="header-item">
           <span>Quantity</span>
         </div>
-        <div className="checkout__header-item">
+        <div className="header-item">
           <span>Price</span>
         </div>
-        <div className="checkout__header-item">
+        <div className="header-item">
           <span>Remove</span>
         </div>
       </div>
@@ -51,12 +51,10 @@ const Checkout = () => {
           />
         );
       })}
-      <div className="checkout__footer">
-        <span className="checkout__total">
-          TOTAL:{" " + countTotalPrice()}$
-        </span>
+      <div className="footer">
+        <span className="total">TOTAL:{" " + countTotalPrice()}$</span>
       </div>
-    </div>
+    </CheckoutContainer>
   );
 };
 

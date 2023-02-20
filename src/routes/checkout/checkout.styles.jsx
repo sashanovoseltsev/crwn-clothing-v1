@@ -1,8 +1,10 @@
-.checkout {
+import styled from "styled-components";
+
+export const CheckoutContainer = styled.div`
   width: 1000px;
   margin: 30px auto;
 
-  &__header {
+  .header {
     margin-bottom: 30px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr auto;
@@ -11,17 +13,17 @@
     column-gap: 10px;
   }
 
-  &__header-item {
+  .header-item {
     justify-self: center;
   }
 
-  &__footer {
+  .footer {
     margin-top: 35px;
     display: flex;
     justify-content: end;
   }
 
-  &__total {
+  .total {
     font-size: 35px;
   }
-}
+`;

@@ -1,31 +1,35 @@
-.cart-icon {
-  width: 45px;
-  height: 45px;
+import styled from "styled-components";
+
+export const CartIconContainer = styled.div`
+  width: 4.5rem;
+  height: 4.5rem;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
 
+  transform: translateY(-2px);
+
   transition: all 0.2s;
 
   &:hover {
     background-color: #333;
-    transform: translateY(-2px);
-    box-shadow: 0 20px 40px rgba(#000, 0.2);
+    transform: translateY(-5px);
+    box-shadow: 0 2rem 4rem rgba(#000, 0.2);
   }
 
-  &:hover &__icon g path {
+  &:hover .icon g path {
     fill: #fff;
   }
 
-  &:hover &__count {
+  &:hover .count {
     color: #fff;
   }
 
-  &__icon {
-    width: 24px;
-    height: 24px;
+  .icon {
+    width: 2.4rem;
+    height: 2.4rem;
 
     g path {
       fill: #333;
@@ -34,13 +38,13 @@
     }
   }
 
-  &__count {
+  .count {
     position: absolute;
-    font-size: 10px;
+    font-size: 1rem;
     font-weight: bold;
-    bottom: 12px;
+    bottom: 1.2rem;
     color: #333;
 
     transition: all 0.2s;
   }
-}
+`;

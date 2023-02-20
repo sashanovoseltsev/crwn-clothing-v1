@@ -1,4 +1,4 @@
-import "./cart-dropdown.styles.scss";
+import { CartDropDownContainer } from "./cart-dropdown.styles.jsx";
 
 import Button from "../button/button.component";
 import CartItem from "../cart-item/cart-item.component";
@@ -13,7 +13,7 @@ const CartDropdown = ({ cartItems, isOpened }) => {
   };
 
   return (
-    <div className={`cart-dropdown ${isOpened ? "" : "cart-dropdown--hidden"}`}>
+    <CartDropDownContainer isOpened={isOpened}>
       {cartItems.length > 0 ? (
         <div className="cart-items">
           {cartItems.map((item) => {
@@ -24,7 +24,7 @@ const CartDropdown = ({ cartItems, isOpened }) => {
         <p className="empty-message">Cart is empty</p>
       )}
       <Button onClick={goToCheckoutHandler}>Go to checkout</Button>
-    </div>
+    </CartDropDownContainer>
   );
 };
 

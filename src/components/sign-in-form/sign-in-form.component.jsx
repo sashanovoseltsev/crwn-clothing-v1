@@ -8,7 +8,7 @@ import {
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 
-import "./sign-in-form.styles.scss";
+import { SignInContainer } from "./sign-in-form.styles.jsx";
 
 const defaultFormState = {
   email: "",
@@ -58,7 +58,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className="sign-in-container">
+    <SignInContainer>
       <h2>Already have an account?</h2>
       <span>Sign in with email and password</span>
       <form onSubmit={handleFormSubmitted}>
@@ -90,7 +90,7 @@ const SignIn = () => {
           </Button>
         </div>
       </form>
-    </div>
+    </SignInContainer>
   );
 };
 

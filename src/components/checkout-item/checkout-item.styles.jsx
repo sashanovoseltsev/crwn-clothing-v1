@@ -1,34 +1,36 @@
-.checkout-item {
+import styled from "styled-components";
+
+export const CheckoutItemContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr auto;
   align-items: center;
-  column-gap: 10px;
-  height: 240px;
-  font-size: 22px;
+  column-gap: 1rem;
+  height: 24rem;
+  font-size: 2.2rem;
   overflow: hidden;
   box-sizing: content-box;
-  padding-bottom: 35px;
+  padding-bottom: 3.5rem;
 
   &:nth-child(n + 1) {
-    padding-top: 20px;
-    border-top: 1.5px solid rgb(121, 121, 121);
+    padding-top: 2rem;
+    border-top: 0.15rem solid rgb(121, 121, 121);
   }
 
   &:nth-last-child(2) {
-    border-bottom: 1.5px solid rgb(121, 121, 121);
+    border-bottom: 0.15rem solid rgb(121, 121, 121);
   }
 
-  &__img-contaienr {
-    width: 200px;
-    height: 240px;
+  .img-contaienr {
+    width: 20rem;
+    height: 24rem;
     overflow: hidden;
   }
 
-  &__img-contaienr:hover &__img {
+  .img-contaienr:hover .img {
     transform: scale(1.3);
   }
 
-  &__img {
+  .img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -36,46 +38,50 @@
     transition: all 0.3s;
   }
 
-  &__quantity-container {
+  .quantity-container {
     display: flex;
     align-items: center;
     justify-content: center;
     justify-self: center;
   }
 
-  &__qnt {
-    margin: 0 10px;
+  .qnt {
+    margin: 0 1rem;
   }
 
-  &__btn {
+  .btn {
     display: inline-block;
-    font-size: 40px;
+    font-size: 4rem;
     font-weight: 700;
-    transform: translateY(-4px);
+    transform: translateY(-0.4rem);
     transition: all 0.2s;
     cursor: pointer;
     justify-self: center;
   }
 
-  &__price {
+  .price {
     text-align: center;
   }
 
-  &__remove {
-    font-size: 40px;
+  .remove {
+    font-size: 4rem;
     font-weight: 600;
     transition: all 0.2s;
-    padding: 0 20px;
+    padding: 0 2rem;
     cursor: pointer;
     justify-self: center;
   }
 
-  &__btn:hover,
-  &__remove:hover {
+  .btn:hover,
+  .remove:hover {
     opacity: 0.7;
   }
 
-  &__text {
+  .text {
     text-align: center;
   }
-}
+`;
+
+// .checkout-item {
+
+// }

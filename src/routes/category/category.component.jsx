@@ -1,4 +1,4 @@
-import "./category.styles.scss";
+import { CategoryProducts } from "./category.styles.jsx";
 
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
@@ -23,9 +23,9 @@ const Category = () => {
   return (
     <>
       <h2>{category.toUpperCase()}</h2>
-      <div className="category__products">
+      <CategoryProducts>
         {products && products.map((p) => <Product key={p.id} product={p} />)}
-      </div>
+      </CategoryProducts>
     </>
   );
 };

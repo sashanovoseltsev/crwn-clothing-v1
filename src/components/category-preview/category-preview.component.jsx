@@ -1,4 +1,4 @@
-import "./category-preview.styles.scss";
+import { CategoryPreviewContainer } from "./category-preview.styles.jsx";
 
 import Button from "../button/button.component";
 import Product from "../product/product.component";
@@ -12,18 +12,18 @@ const CategoryPreview = ({ title, products }) => {
   };
 
   return (
-    <div className="category-preview">
-      <h2 className="category-preview__title-container">
+    <CategoryPreviewContainer>
+      <h2 className="title-container">
         <Button onClick={goToCheckoutHandler}>{title.toUpperCase()}</Button>
       </h2>
-      <div className="category-preview__category-container">
+      <div className="category-container">
         {products
           .filter((_, idx) => idx < 4)
           .map((product) => {
             return <Product key={product.id} product={product} />;
           })}
       </div>
-    </div>
+    </CategoryPreviewContainer>
   );
 };
 

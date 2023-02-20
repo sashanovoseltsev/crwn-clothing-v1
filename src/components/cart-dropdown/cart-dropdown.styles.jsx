@@ -1,4 +1,9 @@
-.cart-dropdown {
+import styled from "styled-components";
+import { css } from "styled-components";
+
+import { BaseButton } from "../button/button.styles";
+
+export const CartDropDownContainer = styled.div`
   position: absolute;
   width: 300px;
   height: 440px;
@@ -26,13 +31,15 @@
     overflow: scroll;
   }
 
-  button {
+  ${BaseButton} {
     margin-top: auto;
     text-align: center;
   }
 
-  &--hidden {
-    visibility: hidden;
-    opacity: 0;
-  }
-}
+  ${(props) =>
+    !props.isOpened &&
+    css`
+      visibility: hidden;
+      opacity: 0;
+    `}
+`;
