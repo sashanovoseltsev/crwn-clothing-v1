@@ -82,7 +82,9 @@ const SignIn = () => {
           required
         />
         <div className="buttons-container">
-          <Button type="submit">Sign In</Button>
+          <Button type="submit" buttonType="base">
+            Sign In
+          </Button>
           <Button type="button" buttonType="google" onClick={signInWithGoogle}>
             Google Sign In
           </Button>

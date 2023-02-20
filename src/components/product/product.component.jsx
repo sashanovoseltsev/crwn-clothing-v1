@@ -1,6 +1,7 @@
 import "./product.styles.scss";
 
 import Button from "../button/button.component";
+import { BUTTON_TYPES } from "../button/button.component";
 
 import { useContext } from "react";
 
@@ -25,7 +26,10 @@ const Product = ({ product }) => {
         <p>{name}</p>
         <p>{price}$</p>
       </div>
-      <Button buttonType="inverted" onClick={() => addItem(product)}>
+      <Button
+        buttonType={BUTTON_TYPES.inverted}
+        onClick={() => addItem(product)}
+      >
         Add to cart
       </Button>
     </div>
