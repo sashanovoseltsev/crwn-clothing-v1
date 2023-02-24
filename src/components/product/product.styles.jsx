@@ -4,7 +4,7 @@ export const ProductContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  height: 38rem;
+  height: 50rem;
   align-items: center;
   position: relative;
   box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.03);
