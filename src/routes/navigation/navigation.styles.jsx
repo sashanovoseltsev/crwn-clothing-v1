@@ -29,7 +29,7 @@ export const LinkContainer = styled.div`
 export const NavLink = styled(Link)`
   &:link,
   &:visited,
-  button {
+  & {
     border: none;
     display: inline-block;
     background-color: transparent;
@@ -45,8 +45,7 @@ export const NavLink = styled(Link)`
   }
 
   &:hover,
-  &:active,
-  button:hover {
+  &:active {
     transform: translateY(-2px);
     box-shadow: 0 20px 40px rgba(#000, 0.2);
     background-color: #333;

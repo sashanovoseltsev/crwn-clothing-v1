@@ -26,7 +26,7 @@ export const ProductContainer = styled.div`
     width: 80% !important;
     opacity: 0.7;
     position: absolute;
-    top: 25.5rem;
+    top: 70%;
     display: none;
     transition: all 0.2s;
   }

@@ -1,20 +1,28 @@
-import { createContext, useState } from "react";
+import { createContext, useReducer } from "react";
 
-// export const CartContext = createContext({
-//   cartState: {
-//     items: new Map(),
-//     isOpened: false,
-//     addItem: () => {},
-//     getTotalItems: () => {},
-//   },
-//   setCartState: () => {},
-// });
-
-// If we can provide just empty object as default context, then why define example structure?
 export const CartContext = createContext({});
 
+const CART_ACTION_TYPES = {
+  SET_CART_STATE: 'SET_CART_STATE'
+}
+
+const cartReducer = (state, action) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case CART_ACTION_TYPES.SET_CART_STATE:
+      return {
+        ...state,
+        cartState: payload
+      }
+    default:
+      throw new Error (`Unknown action type ${type} in cartReducer`);
+  }
+
+}
+
 export const CartProvider = ({ children }) => {
-  const [cartState, setCartState] = useState({
+  const [{cartState}, dispatch] = useReducer(cartReducer, {cartState: {
     items: new Map(),
     isOpened: false,
     addItem,
@@ -22,7 +30,11 @@ export const CartProvider = ({ children }) => {
     getTotalPrice,
     changeQuantity,
     removeItem,
-  });
+  }});
+
+  const setCartState = (cart) => {
+    dispatch({ type: CART_ACTION_TYPES.SET_CART_STATE, payload: cart});
+  }
 
   const value = { cartState, setCartState };
 
