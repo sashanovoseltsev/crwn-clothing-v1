@@ -5,22 +5,11 @@ import { CartContext } from "../../contexts/cart.context";
 import CheckoutItem from "../../components/checkout-item/checkout-item.component";
 
 const Checkout = () => {
-  const { cartState, setCartState } = useContext(CartContext);
-  const items = [...cartState.items.values()];
-
-  const changeQuantity = (item, qnt) => {
-    cartState.changeQuantity(item, qnt);
-    setCartState({ ...cartState });
-  };
-
-  const removeItem = (item) => {
-    cartState.removeItem(item);
-    setCartState({ ...cartState });
-  };
-
-  const countTotalPrice = () => {
-    return cartState.getTotalPrice();
-  };
+  const {
+    items,
+    cartTotalPrice,
+    changeItemQuantity,
+    removeItemFromCart } = useContext(CartContext);
 
   return (
     <CheckoutContainer>
@@ -41,18 +30,18 @@ const Checkout = () => {
           <span>Remove</span>
         </div>
       </div>
-      {items.map((i) => {
+      {[...items.values()].map((i) => {
         return (
           <CheckoutItem
-            changeQuantity={changeQuantity}
-            removeItem={removeItem}
+            changeQuantity={changeItemQuantity}
+            removeItem={removeItemFromCart}
             item={i}
             key={i.id}
           />
         );
       })}
       <div className="footer">
-        <span className="total">TOTAL:{" " + countTotalPrice()}$</span>
+        <span className="total">TOTAL:{" " + cartTotalPrice}$</span>
       </div>
     </CheckoutContainer>
   );

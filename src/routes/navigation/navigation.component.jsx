@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/user.context";
 import { CartContext } from "../../contexts/cart.context";
@@ -18,15 +18,10 @@ import {
 
 const Navigation = () => {
   const { currentUser } = useContext(UserContext);
-  const { cartState, setCartState } = useContext(CartContext);
+  const { isOpened, toggleCartOpened, cartTotalItems, items } = useContext(CartContext);
 
   const handleSignOut = async () => {
     await signOutUser();
-  };
-
-  const handleCartIconClick = () => {
-    cartState.isOpened = !cartState.isOpened;
-    setCartState({ ...cartState });
   };
 
   return (
@@ -45,13 +40,13 @@ const Navigation = () => {
             <NavLink to="/auth">{"sign in "}</NavLink>
           )}
           <CartIcon
-            count={cartState.getTotalItems()}
-            onClickHandler={handleCartIconClick}
+            count={cartTotalItems}
+            onClickHandler={toggleCartOpened}
           />
         </LinkContainer>
         <CartDropdown
-          cartItems={[...cartState.items.values()]}
-          isOpened={cartState.isOpened}
+          cartItems={[...items.values()]}
+          isOpened={isOpened}
         />
       </NavigationContainer>
       <Outlet />

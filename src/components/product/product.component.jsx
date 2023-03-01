@@ -8,13 +8,7 @@ import { useContext } from "react";
 import { CartContext } from "../../contexts/cart.context";
 
 const Product = ({ product }) => {
-  const { cartState, setCartState } = useContext(CartContext);
-
-  const addItem = (product) => {
-    console.log("addItem");
-    cartState.addItem(product);
-    setCartState({ ...cartState });
-  };
+  const { addItemToCart } = useContext(CartContext);
 
   const { name, price, imageUrl } = product;
   return (
@@ -28,7 +22,7 @@ const Product = ({ product }) => {
       </div>
       <Button
         buttonType={BUTTON_TYPES.inverted}
-        onClick={() => addItem(product)}
+        onClick={() => addItemToCart(product)}
       >
         Add to cart
       </Button>
