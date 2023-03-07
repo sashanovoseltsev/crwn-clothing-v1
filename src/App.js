@@ -34,11 +34,10 @@ const App = () => {
     // addCollectionAndDocuments("categories", SHOP_DATA);
 
     const getCategories = async () => {
-      const categoriesMap = await getDocumentsFromCollection(
+      const categoriesArray = await getDocumentsFromCollection(
         COLLECTION_CATEGORIES
       );
-      console.log(categoriesMap);
-      dispatch(setCategories(categoriesMap));
+      dispatch(setCategories(categoriesArray));
     };
     getCategories();
   }, []);

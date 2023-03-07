@@ -52,13 +52,7 @@ export const getDocumentsFromCollection = async (collectionKey) => {
   const q = query(collectionRef);
   const querySnapshot = await getDocs(q);
 
-  const documentsMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-    const { title, items, imageUrl, route, id } = docSnapshot.data();
-    acc[title.toLowerCase()] = {title, items, imageUrl, route, id};
-    return acc;
-  }, {});
-
-  return documentsMap;
+  return querySnapshot.docs.map(docSnapshot => docSnapshot.data());
 };
 
 export const addCollectionAndDocuments = async (

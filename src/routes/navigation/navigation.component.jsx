@@ -1,8 +1,6 @@
 import { Outlet } from "react-router-dom";
-import { useContext } from "react";
-import { CartContext } from "../../contexts/cart.context";
 import { signOutUser } from "../../utils/firebase/firebase.utils";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { selectCurrentUser } from '../../store/user/user.selectors'; 
 
@@ -18,9 +16,18 @@ import {
   NavLink,
 } from "./navigation.styles.jsx";
 
+import { selectCartIsOpened, selectTotalItems, selectCartItems } from '../../store/cart/cart.selectors';
+import { toggleCartOpened } from '../../store/cart/cart.action';
+
 const Navigation = () => {
+
+  const dispatch = useDispatch();
+
   const currentUser = useSelector(selectCurrentUser);
-  const { isOpened, toggleCartOpened, cartTotalItems, items } = useContext(CartContext);
+  
+  const items = useSelector(selectCartItems);
+  const isOpened = useSelector(selectCartIsOpened);
+  const cartTotalItems = useSelector(selectTotalItems);
 
   const handleSignOut = async () => {
     await signOutUser();
@@ -43,7 +50,7 @@ const Navigation = () => {
           )}
           <CartIcon
             count={cartTotalItems}
-            onClickHandler={toggleCartOpened}
+            onClickHandler={() => dispatch(toggleCartOpened(isOpened))}
           />
         </LinkContainer>
         <CartDropdown
