@@ -12,7 +12,7 @@ export const cartReducer = (state = INITIAL_VALUE, action) => {
     case CART_ACTION_TYPES.SET_CART_ITEMS:
       return {
         ...state,
-        items: payload
+        items: new Map(payload)
       }
     case CART_ACTION_TYPES.SET_IS_OPENED:
       return {
