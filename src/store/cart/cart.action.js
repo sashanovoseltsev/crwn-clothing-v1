@@ -29,7 +29,9 @@ export const removeItemFromCart = (items, item) => {
 
 
 function addItem(items, item) {
-  const { id } = item;
+  const id = item.id.toString();
+  // convert id to string. 
+  // Required for correct persist/rehydrate process during redux-persist store to local storage procedure
 
   const foundItem = items.get(id);
   if (!foundItem) {
@@ -44,14 +46,14 @@ function addItem(items, item) {
 function changeQuantity(items, item, qnt) {
   const newQnt = item.qnt + qnt;
   if (newQnt > 0) {
-    items.set(item.id, { ...item, qnt: newQnt });
+    items.set(item.id.toString(), { ...item, qnt: newQnt });
   }
 
   return items;
 }
 
 function removeItem(items, item) {
-  items.delete(item.id);
+  items.delete(item.id.toString());
 
   return items;
 }

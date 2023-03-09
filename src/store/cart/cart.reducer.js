@@ -1,9 +1,27 @@
 import { CART_ACTION_TYPES } from './cart.type';
+import { createTransform } from 'redux-persist';
+
+const someMap = new Map();
+someMap.set(1, 'one');
+someMap.set(2, 'two');
 
 const INITIAL_VALUE = {
   isOpened: false,
   items: new Map()
 }
+
+export const CartItemsTransform = createTransform(
+  // transform state on its way to being serialized and persisted.
+  (inboundState, key) => {
+    return { ...inboundState, items: Object.fromEntries(inboundState.items)}
+  },
+  // transform state being rehydrated
+  (outboundState, key) => {
+    return { ...outboundState, items: new Map(Object.entries(outboundState.items))}
+  },
+  // transform state being rehydrated
+  {whitelist: ['cart']}
+);
 
 export const cartReducer = (state = INITIAL_VALUE, action) => {
   const {type, payload} = action;

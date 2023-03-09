@@ -2,9 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import App from "./App";
-import { store } from './store/store';
+import { store, persistor } from './store/store';
 
 import { GlobalStyles } from "./global.styles";
 
@@ -13,9 +14,15 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <GlobalStyles />
-      <BrowserRouter>
-          <App />
-      </BrowserRouter>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );
+
+// NOTE:
+// loading={null} means that nothing inside PersistGate will be rendered until
+// persisted info is obtained from storage (local storage in our case).
