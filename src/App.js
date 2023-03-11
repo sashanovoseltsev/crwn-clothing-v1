@@ -5,14 +5,14 @@ import Navigation from "./routes/navigation/navigation.component";
 import Authentication from "./components/authentication/authentication.component";
 import Shop from "./routes/shop/shop.component";
 import Checkout from "./routes/checkout/checkout.component";
-import { onAuthStateChangedListener, createUserDocumentFromAuth, getDocumentsFromCollection } from './utils/firebase/firebase.utils';
+import { onAuthStateChangedListener, createUserDocumentFromAuth } from './utils/firebase/firebase.utils';
+import { fetchCategories } from './store/categories/categories.action';
 
 import { useEffect } from 'react';
 import { Routes, Route } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-
-
-const COLLECTION_CATEGORIES = "categories";
+import { useSelector } from 'react-redux';
+import { selectCategoriesArray } from './store/categories/categories.selectors';
 
 
 const App = () => {
@@ -29,17 +29,15 @@ const App = () => {
 
     return unsubscribe; // seems that in current version of Firebase unsubscribe doesn't actually do unsubscribe action
   }, []);
+  
+  // we try to obtain categories from the store to check if they are available from local storage
+  // to omit fetching them from db
+  const cachedCategoriesArray = useSelector(selectCategoriesArray);
 
   useEffect(() => {
-    // addCollectionAndDocuments("categories", SHOP_DATA);
-
-    const getCategories = async () => {
-      const categoriesArray = await getDocumentsFromCollection(
-        COLLECTION_CATEGORIES
-      );
-      dispatch(setCategories(categoriesArray));
-    };
-    getCategories();
+    if (!cachedCategoriesArray?.length) {
+      dispatch(fetchCategories);
+    }
   }, []);
 
   return (

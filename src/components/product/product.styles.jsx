@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+const productImageHeightPercent = 89;
+
 export const ProductContainer = styled.div`
   width: 100%;
   display: flex;
@@ -11,7 +13,7 @@ export const ProductContainer = styled.div`
 
   .img-container {
     width: 100%;
-    height: 85%;
+    height: ${productImageHeightPercent}%;
     overflow: hidden;
   }
 
@@ -49,9 +51,10 @@ export const ProductContainer = styled.div`
 
   .footer {
     width: 100%;
-    height: 15%;
+    height: ${100 - productImageHeightPercent}%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     font-size: 1.8rem;
     padding: 0 0.5rem;
   }

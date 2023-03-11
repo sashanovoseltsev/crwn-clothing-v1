@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 const selectCategoryReducer = (state) => state.categories;
 
-const selectCategoriesArray = createSelector([selectCategoryReducer],
+export const selectCategoriesArray = createSelector([selectCategoryReducer],
   (categories) => categories.categoriesArray);
 
 export const selectCategories = createSelector([selectCategoriesArray], 
@@ -14,3 +14,6 @@ export const selectCategories = createSelector([selectCategoriesArray],
 
 
   // NOTE: businesse logic related to transformation of data is moved to selector from firebase utils
+
+
+export const selectCategoryIsLoading = createSelector([selectCategoryReducer], (categories) => categories.isLoading);

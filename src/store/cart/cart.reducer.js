@@ -1,10 +1,6 @@
 import { CART_ACTION_TYPES } from './cart.type';
 import { createTransform } from 'redux-persist';
 
-const someMap = new Map();
-someMap.set(1, 'one');
-someMap.set(2, 'two');
-
 const INITIAL_VALUE = {
   isOpened: false,
   items: new Map()

@@ -4,14 +4,16 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from 'react-redux';
 
-import { selectCategories } from '../../store/categories/categories.selectors.js';
+import { selectCategories, selectCategoryIsLoading } from '../../store/categories/categories.selectors.js';
 
 import Product from "../../components/product/product.component";
+import Spinner from '../../components/spinner/spinner.component.jsx';
 
 const Category = () => {
   const { category } = useParams();
 
   const categoriesMap = useSelector(selectCategories);
+  const isLoading = useSelector(selectCategoryIsLoading);
 
   const [products, setProducts] = useState(categoriesMap[category]?.items);
 
@@ -22,9 +24,13 @@ const Category = () => {
   return (
     <CategoryContainer>
       <h2>{category}</h2>
-      <CategoryProducts>
-        {products && products.map((p) => <Product key={p.id} product={p} />)}
-      </CategoryProducts>
+    {
+      isLoading 
+        ? ( <Spinner /> )
+        : ( <CategoryProducts>
+              {products && products.map((p) => <Product key={p.id} product={p} />)}
+            </CategoryProducts> )
+    }
     </CategoryContainer>
   );
 };

@@ -1,30 +1,13 @@
 import { compose, createStore, applyMiddleware } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import thunk from 'redux-thunk';
 // import logger from 'redux-logger';
 
 import { rootReducer } from './root-reducer';
 import { CartItemsTransform } from './cart/cart.reducer';
+import { loggerMiddleware } from './middleware/logger';
 
-const loggerMiddleware = (store) => {
-  return (next) => {
-    return (action) => {
-      if (!action.type) {
-        return next(action);
-      }
-
-      console.log('type:', action.type);
-      console.log('payload:', action.payload);
-      const currState = store.getState();
-      console.log('current state', currState);
-
-      next(action);
-      
-      const nextState = store.getState();
-      console.log('next state', nextState);
-    }
-  }
-}
 
 const persistConfig = {
   key: 'root',
@@ -35,9 +18,11 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const middleWares = [loggerMiddleware];
+const middleWares = [process.env.NODE_ENV !== 'production' && loggerMiddleware, thunk].filter(Boolean);
 
-const composedEnhancers = compose(applyMiddleware(loggerMiddleware));
+const composeEnhancers = (process.env.NODE_ENV !== 'production' && window && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+
+const composedEnhancers = composeEnhancers(applyMiddleware(...middleWares));
 
 export const store = createStore(persistedReducer, undefined, composedEnhancers);
 
