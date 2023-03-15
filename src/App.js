@@ -1,12 +1,12 @@
-import { setCurrentUser } from './store/user/user.action';
+import { checkUserSession, setCurrentUser } from './store/user/user.action';
 import { setCategories } from './store/categories/categories.action';
 import Home from "./routes/home/home.component";
 import Navigation from "./routes/navigation/navigation.component";
 import Authentication from "./components/authentication/authentication.component";
 import Shop from "./routes/shop/shop.component";
 import Checkout from "./routes/checkout/checkout.component";
-import { onAuthStateChangedListener, createUserDocumentFromAuth } from './utils/firebase/firebase.utils';
-import { fetchCategories } from './store/categories/categories.action';
+import { onAuthStateChangedListener, createUserDocumentFromAuth, getCurrentUser } from './utils/firebase/firebase.utils';
+import { fetchCategoriesStart } from './store/categories/categories.action';
 
 import { useEffect } from 'react';
 import { Routes, Route } from "react-router-dom";
@@ -19,15 +19,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    var unsubscribe = onAuthStateChangedListener((user) => {
-      if (user) {
-        createUserDocumentFromAuth(user);
-      }
-
-      dispatch(setCurrentUser(user));
-    });
-
-    return unsubscribe; // seems that in current version of Firebase unsubscribe doesn't actually do unsubscribe action
+    dispatch(checkUserSession());
   }, []);
   
   // we try to obtain categories from the store to check if they are available from local storage
@@ -36,7 +28,7 @@ const App = () => {
 
   useEffect(() => {
     if (!cachedCategoriesArray?.length) {
-      dispatch(fetchCategories);
+      dispatch(fetchCategoriesStart());
     }
   }, []);
 

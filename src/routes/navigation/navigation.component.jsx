@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
-import { signOutUser } from "../../utils/firebase/firebase.utils";
 import { useDispatch, useSelector } from 'react-redux';
 
 import { selectCurrentUser } from '../../store/user/user.selectors'; 
+import { signOut } from '../../store/user/user.action';
 
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
@@ -30,7 +30,7 @@ const Navigation = () => {
   const cartTotalItems = useSelector(selectTotalItems);
 
   const handleSignOut = async () => {
-    await signOutUser();
+    dispatch(signOut());
   };
 
   return (
