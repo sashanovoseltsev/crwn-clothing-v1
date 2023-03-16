@@ -28,6 +28,18 @@ export const signOut = () => {
   return { type: USER_ACTION_TYPES.SIGN_OUT }
 }
 
+export const signOutFailed = (error) => {
+  return { type: USER_ACTION_TYPES.SIGN_OUT_FAILED, payload: error };
+}
+
 export const signUpWithEmailAndPasswordStart = (email, password, displayName) => {
   return { type: USER_ACTION_TYPES.SIGN_UP_EMAIL_START, payload: {email, password, displayName} }
+}
+
+export const signUpWithEmailSuccessAction = (user, additionalDetails) => {
+  return { type: USER_ACTION_TYPES.SIGN_UP_EMAIL_SUCCESS, payload: { user, additionalDetails } };
+}
+
+export const signUpWithEmailFailedAction = (error) => {
+  return { type: USER_ACTION_TYPES.SIGN_UP_EMAIL_FAILED, payload: error }; 
 }
