@@ -6,10 +6,7 @@ import Button from "../button/button.component";
 
 import { SignUpContainer } from "./sign-up-form.styles.jsx";
 
-import Spinner from '../spinner/spinner.component';
-
 import { signUpWithEmailAndPasswordStart } from '../../store/user/user.action';
-import { selectUserIsLoading } from '../../store/user/user.selectors';
 
 const defaultFormState = {
   displayName: "",
@@ -21,7 +18,6 @@ const defaultFormState = {
 const SignUp = () => {
   const dispatch = useDispatch();
   const [formState, setFormState] = useState(defaultFormState);
-  const isLoading = useSelector(selectUserIsLoading);
 
   const { displayName, email, password, confirmPassword } = formState;
 
