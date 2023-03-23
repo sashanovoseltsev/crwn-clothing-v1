@@ -4,10 +4,15 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
+import { enableMapSet } from 'immer';
+
 import App from "./App";
 import { store, persistor } from './store/store';
 
 import { GlobalStyles } from "./global.styles";
+
+// Required for redux-toolkit to work with Map objects inside states (cart state in particular)
+enableMapSet();
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

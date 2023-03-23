@@ -17,7 +17,7 @@ import {
 } from "./navigation.styles.jsx";
 
 import { selectCartIsOpened, selectTotalItems, selectCartItems } from '../../store/cart/cart.selectors';
-import { toggleCartOpened } from '../../store/cart/cart.action';
+import { toggleCartOpened } from '../../store/cart/cart.reducer';
 
 const Navigation = () => {
 
@@ -50,7 +50,7 @@ const Navigation = () => {
           )}
           <CartIcon
             count={cartTotalItems}
-            onClickHandler={() => dispatch(toggleCartOpened(isOpened))}
+            onClickHandler={() => dispatch(toggleCartOpened())}
           />
         </LinkContainer>
         <CartDropdown

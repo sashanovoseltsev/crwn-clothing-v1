@@ -4,7 +4,7 @@ import CheckoutItem from "../../components/checkout-item/checkout-item.component
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { selectCartItems, selectTotalPrice } from '../../store/cart/cart.selectors.js';
-import { changeItemQuantity, removeItemFromCart } from '../../store/cart/cart.action.js';
+import { changeItemQuantity, removeItemFromCart } from '../../store/cart/cart.reducer';
 
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -34,8 +34,8 @@ const Checkout = () => {
       {[...items.values()].map((i) => {
         return (
           <CheckoutItem
-            changeQuantity={(item, qnt) => dispatch(changeItemQuantity(items, item, qnt))}
-            removeItem={(item) => dispatch(removeItemFromCart(items, item))}
+            changeQuantity={(item, qnt) => dispatch(changeItemQuantity({item, qnt}))}
+            removeItem={(item) => dispatch(removeItemFromCart(item))}
             item={i}
             key={i.id}
           />

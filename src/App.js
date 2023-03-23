@@ -1,12 +1,10 @@
-import { checkUserSession, setCurrentUser } from './store/user/user.action';
-import { setCategories } from './store/categories/categories.action';
+import { checkUserSession } from './store/user/user.action';
 import Home from "./routes/home/home.component";
 import Navigation from "./routes/navigation/navigation.component";
 import Authentication from "./components/authentication/authentication.component";
 import Shop from "./routes/shop/shop.component";
 import Checkout from "./routes/checkout/checkout.component";
-import { onAuthStateChangedListener, createUserDocumentFromAuth, getCurrentUser } from './utils/firebase/firebase.utils';
-import { fetchCategoriesStart } from './store/categories/categories.action';
+import { fetchCategoriesStart } from './store/categories/categories.reducer';
 
 import { useEffect } from 'react';
 import { Routes, Route } from "react-router-dom";
