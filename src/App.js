@@ -1,4 +1,4 @@
-import { checkUserSession } from './store/user/user.action';
+import { checkUserSession } from './store/user/user.reducer';
 import Home from "./routes/home/home.component";
 import Navigation from "./routes/navigation/navigation.component";
 import Authentication from "./components/authentication/authentication.component";

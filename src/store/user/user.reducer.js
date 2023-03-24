@@ -1,4 +1,4 @@
-import { USER_ACTION_TYPES } from './user.types';
+import { createSlice } from '@reduxjs/toolkit';
 
 const INITIAL_STATE = {
   currentUser: null,
@@ -6,55 +6,65 @@ const INITIAL_STATE = {
   error: null
 }
 
-export const userReducer = (state = INITIAL_STATE, action) => {
-  const { type, payload } = action;
-
-  switch(type) {
-    case USER_ACTION_TYPES.SIGN_IN_SUCCESS:
-      return {
-        ...state,
-        currentUser: payload,
-        isLoading: false
-      };
-    case USER_ACTION_TYPES.SIGN_OUT_FAILED:
-    case USER_ACTION_TYPES.SIGN_IN_FAILED:
-    case USER_ACTION_TYPES.SIGN_UP_EMAIL_FAILED:
-      return {
-        ...state,
-        error: payload,
-        isLoading: false
-      }
-    case USER_ACTION_TYPES.EMAIL_SIGN_IN_START:
-      return {
-        ...state,
-        isLoading: true,
-        error: null,
-      }
-    case USER_ACTION_TYPES.GOOGLE_SIGN_IN_START:
-      return {
-        ...state,
-        isLoading: true,
-        error: null,
-      }
-    case USER_ACTION_TYPES.SIGN_UP_EMAIL_START:
-      return {
-        ...state,
-        isLoading: true,
-        error: null,
-      }
-      case USER_ACTION_TYPES.SIGN_UP_EMAIL_SUCCESS:
-      return {
-        ...state,
-        isLoading: false,
-        error: null,
-      }
-    case USER_ACTION_TYPES.SIGN_OUT:
-      return {
-        ...state,
-        currentUser: null,
-        error: null,
-      }
-    default:
-      return state;
+export const userSlice = createSlice({
+  name: 'user',
+  initialState: INITIAL_STATE,
+  reducers: {
+    setCurrentUser(state, action) {
+      state.currentUser = action.payload;
+      state.error = null;
+    },
+    checkUserSession(state, _) {
+      state.error = null;
+    },
+    googleSignInStart(state, _) {
+      state.isLoading = true;
+      state.error = null;
+    },
+    emailSignInStart(state, _) {
+      state.isLoading = true;
+      state.error = null;
+    },
+    signInSuccess(state, action) {
+      state.isLoading = false;
+      state.currentUser = action.payload;
+      state.error = null;
+    } ,
+    signInFailed(state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    signOut(state, _) {
+      state.currentUser = null;
+      state.error = null;
+    },
+    signOutFailed(state, action) {
+      state.error = action.payload;
+    },
+    signUpWithEmailAndPasswordStart(state, _) {
+      state.isLoading = true;
+      state.error = null;
+    },
+    signUpWithEmailSuccessAction(state, action) {
+      state.isLoading = false;
+      state.currentUser = action.payload;
+    },
+    signUpWithEmailFailedAction(state, action, error) {
+      state.isLoading = false;
+      state.error = action.payload;
+    }
   }
-}
+});
+
+export const userReducer = userSlice.reducer;
+export const {setCurrentUser,
+  checkUserSession,
+  googleSignInStart,
+  emailSignInStart,
+  signInSuccess,
+  signInFailed,
+  signOut,
+  signOutFailed,
+  signUpWithEmailAndPasswordStart,
+  signUpWithEmailSuccessAction,
+  signUpWithEmailFailedAction } = userSlice.actions;

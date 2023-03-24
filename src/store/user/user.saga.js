@@ -1,8 +1,16 @@
-import { takeLatest, put, all, call, take } from 'redux-saga/effects';
+import { takeLatest, put, all, call } from 'redux-saga/effects';
 
-import { USER_ACTION_TYPES } from './user.types';
+import { checkUserSession,
+  emailSignInStart,
+  googleSignInStart,
+  signOut, 
+  signInSuccess, 
+  signInFailed, 
+  signOutFailed,
+  signUpWithEmailAndPasswordStart, 
+  signUpWithEmailSuccessAction, 
+  signUpWithEmailFailedAction } from './user.reducer';
 
-import { signInSuccess, signInFailed, signOutFailed, signUpWithEmailSuccessAction, signUpWithEmailFailedAction } from './user.action';
 import { getCurrentUser, 
   createUserDocumentFromAuth, 
   signInWithGooglePopup, 
@@ -23,7 +31,7 @@ export function* isUserAuthenticated() {
 }
 
 export function* onCheckUserSession() {
-  yield takeLatest(USER_ACTION_TYPES.CHECK_USER_SESSION, isUserAuthenticated)
+  yield takeLatest(checkUserSession.type, isUserAuthenticated)
 }
 
 export function* signInAuthUserWithEmailPasswordAsync({ payload: { email, password}}) {
@@ -37,7 +45,7 @@ export function* signInAuthUserWithEmailPasswordAsync({ payload: { email, passwo
 }
 
 export function* onSignInWithEmailAndPassword() {
-  yield takeLatest(USER_ACTION_TYPES.EMAIL_SIGN_IN_START, signInAuthUserWithEmailPasswordAsync);
+  yield takeLatest(emailSignInStart.type, signInAuthUserWithEmailPasswordAsync);
 }
 
 export function* signInWithGoogleAsync() {
@@ -52,7 +60,7 @@ export function* signInWithGoogleAsync() {
 }
 
 export function* onSignInWithGoogle() {
-  yield takeLatest(USER_ACTION_TYPES.GOOGLE_SIGN_IN_START, signInWithGoogleAsync);
+  yield takeLatest(googleSignInStart.type, signInWithGoogleAsync);
 }
 
 export function* signOutUserAsync() {
@@ -63,7 +71,7 @@ export function* signOutUserAsync() {
 export function* onSignOut() {
   // console.log('onSignOut taken'); - this code will NOT be called. Why?
   try {
-    yield takeLatest(USER_ACTION_TYPES.SIGN_OUT, signOutUserAsync);
+    yield takeLatest(signOut.type, signOutUserAsync);
   } catch (error) {
     yield put(signOutFailed(error));
   }
@@ -80,6 +88,8 @@ export function* signInFailedHandler({ payload: error }) {
     case "auth/email-already-in-use":
       alert("Cannot create user. Email already in use.");
       break;
+    case "auth/popup-closed-by-user":
+      alert("Sign-in pop-up closed by user.")
     default:
       alert(error.code);
       break;
@@ -95,7 +105,7 @@ export function* signOutFailedHandler({ payload: error }) {
 export function* signUpWithEmailAsync({ payload: { email, password, displayName}}) {
   try {
     const { user } = yield call(createAuthUserWithEmailAndPassword, email, password);
-    yield put(signUpWithEmailSuccessAction(user, {displayName}));
+    yield put(signUpWithEmailSuccessAction({user, additionalDetails: {displayName}}));
   } catch (error) {
     yield put(signUpWithEmailFailedAction(error));
   }
@@ -116,23 +126,23 @@ export function* signUpWithEmailFailed(action) {
 }
 
 export function* onSignUpWithEmailSuccess() {
-  yield takeLatest(USER_ACTION_TYPES.SIGN_UP_EMAIL_SUCCESS, signUpWithEmailSuccess);
+  yield takeLatest(signUpWithEmailSuccessAction.type, signUpWithEmailSuccess);
 }
 
 export function* onSignUpWithEmail() {
-  yield takeLatest(USER_ACTION_TYPES.SIGN_UP_EMAIL_START, signUpWithEmailAsync);
+  yield takeLatest(signUpWithEmailAndPasswordStart.type, signUpWithEmailAsync);
 }
 
 export function* onSignUpWithEmailFailed() {
-  yield takeLatest(USER_ACTION_TYPES.SIGN_UP_EMAIL_FAILED, signUpWithEmailFailed);
+  yield takeLatest(signUpWithEmailFailedAction.type, signUpWithEmailFailed);
 }
 
 export function* onSignInFailed() {
-  yield takeLatest(USER_ACTION_TYPES.SIGN_IN_FAILED, signInFailedHandler);
+  yield takeLatest(signInFailed.type, signInFailedHandler);
 }
 
 export function* onSignOutFailed() {
-  yield takeLatest(USER_ACTION_TYPES.SIGN_OUT_FAILED, signOutFailedHandler);
+  yield takeLatest(signOutFailed.type, signOutFailedHandler);
 }
 
 export function* userSaga() {

@@ -5,7 +5,7 @@ import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 
 import { SignInContainer } from "./sign-in-form.styles.jsx";
-import { emailSignInStart, googleSignInStart } from '../../store/user/user.action';
+import { emailSignInStart, googleSignInStart } from '../../store/user/user.reducer';
 
 const defaultFormState = {
   email: "",
@@ -29,7 +29,7 @@ const SignIn = () => {
   const handleFormSubmitted = async (event) => {
     event.preventDefault();
     if (!email || !password) return;
-    dispatch(emailSignInStart(email, password));
+    dispatch(emailSignInStart({email, password}));
     resetFormFields();
   };
 

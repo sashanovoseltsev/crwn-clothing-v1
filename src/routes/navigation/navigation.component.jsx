@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 
 import { selectCurrentUser } from '../../store/user/user.selectors'; 
-import { signOut } from '../../store/user/user.action';
+import { signOut } from '../../store/user/user.reducer';
 
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";

@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 
 import { SignUpContainer } from "./sign-up-form.styles.jsx";
 
-import { signUpWithEmailAndPasswordStart } from '../../store/user/user.action';
+import { signUpWithEmailAndPasswordStart } from '../../store/user/user.reducer';
 
 const defaultFormState = {
   displayName: "",
@@ -35,7 +35,7 @@ const SignUp = () => {
       return;
     }
 
-    dispatch(signUpWithEmailAndPasswordStart(email, password, displayName));
+    dispatch(signUpWithEmailAndPasswordStart({email, password, displayName}));
     resetFormFields();
   };
 
