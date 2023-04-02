@@ -20,7 +20,8 @@ export const CheckoutContainer = styled.div`
   .footer {
     margin-top: 35px;
     display: flex;
-    justify-content: end;
+    flex-direction: column;
+    align-items: end;
   }
 
   .total {

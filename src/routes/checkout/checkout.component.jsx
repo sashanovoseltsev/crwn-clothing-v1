@@ -1,8 +1,8 @@
 import { CheckoutContainer } from "./checkout.styles.jsx";
 
 import CheckoutItem from "../../components/checkout-item/checkout-item.component";
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import PaymentForm from '../../components/payment-form/payment-form.component.jsx';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectCartItems, selectTotalPrice } from '../../store/cart/cart.selectors.js';
 import { changeItemQuantity, removeItemFromCart } from '../../store/cart/cart.reducer';
 
@@ -10,7 +10,6 @@ const Checkout = () => {
   const dispatch = useDispatch();
   const items = useSelector(selectCartItems);
   const cartTotalPrice = useSelector(selectTotalPrice);
-
 
   return (
     <CheckoutContainer>
@@ -42,7 +41,8 @@ const Checkout = () => {
         );
       })}
       <div className="footer">
-        <span className="total">TOTAL:{" " + cartTotalPrice}$</span>
+        <div><span className="total">TOTAL:{" " + cartTotalPrice}$</span></div>
+        <PaymentForm />
       </div>
     </CheckoutContainer>
   );
