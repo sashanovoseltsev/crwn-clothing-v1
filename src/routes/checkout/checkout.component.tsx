@@ -1,4 +1,4 @@
-import { CheckoutContainer } from "./checkout.styles";
+import { CheckoutContainer, HeaderItem, Header } from "./checkout.styles";
 
 import CheckoutItem from "../../components/checkout-item/checkout-item.component";
 import PaymentForm from '../../components/payment-form/payment-form.component';
@@ -13,23 +13,23 @@ const Checkout = () => {
 
   return (
     <CheckoutContainer>
-      <div className="header">
-        <div className="header-item">
+      <Header>
+        <HeaderItem>
           <span>Product</span>
-        </div>
-        <div className="header-item">
+        </HeaderItem>
+        <HeaderItem>
           <span>Description</span>
-        </div>
-        <div className="header-item">
+        </HeaderItem>
+        <HeaderItem>
           <span>Quantity</span>
-        </div>
-        <div className="header-item">
+        </HeaderItem>
+        <HeaderItem>
           <span>Price</span>
-        </div>
-        <div className="header-item">
+        </HeaderItem>
+        <HeaderItem>
           <span>Remove</span>
-        </div>
-      </div>
+        </HeaderItem>
+      </Header>
       {[...items.values()].map((i) => {
         return (
           <CheckoutItem
