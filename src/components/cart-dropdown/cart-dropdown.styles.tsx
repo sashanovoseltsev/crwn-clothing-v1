@@ -3,7 +3,11 @@ import { css } from "styled-components";
 
 import { BaseButton } from "../button/button.styles";
 
-export const CartDropDownContainer = styled.div`
+export type CartDropDownContainerProps = {
+  isOpened: boolean;
+}
+
+export const CartDropDownContainer = styled.div<CartDropDownContainerProps>`
   position: absolute;
   width: 300px;
   height: 440px;
@@ -13,7 +17,7 @@ export const CartDropDownContainer = styled.div`
   border: 1px solid black;
   background-color: white;
   top: 90px;
-  right: 40px;
+  right: 1rem;
   z-index: 5;
   visibility: visible;
   opacity: 100;
@@ -43,3 +47,10 @@ export const CartDropDownContainer = styled.div`
       opacity: 0;
     `}
 `;
+
+export const CartDropDownTotalPrice = styled.p`
+  display: inline-block;
+  padding: .05rem 1rem .5rem 0;
+  font-size: 1.3rem;
+  text-align: right;
+`

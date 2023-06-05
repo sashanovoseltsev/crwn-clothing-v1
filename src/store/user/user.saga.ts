@@ -64,12 +64,10 @@ export function* onSignInWithGoogle() {
 }
 
 export function* signOutUserAsync() {
-  // console.log('onSignOut taken'); - this code WILL BE called. Why below why commented code is not called?
   yield* call(signOutUser);
 }
 
 export function* onSignOut() {
-  // console.log('onSignOut taken'); - this code will NOT be called. Why?
   try {
     yield* takeLatest(USER_ACTION_TYPES.SIGN_OUT, signOutUserAsync);
   } catch (error) {

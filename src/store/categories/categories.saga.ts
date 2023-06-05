@@ -6,7 +6,7 @@ import { getDocumentsFromCollection } from '../../utils/firebase/firebase.utils'
 
 const COLLECTION_CATEGORIES = "categories";
 
-function* fetchCategoriesAsync() {
+export function* fetchCategoriesAsync() {
   try {
     const categoriesArray = yield* call(getDocumentsFromCollection, COLLECTION_CATEGORIES);
     yield* put(fetchCategoriesSucceeded(categoriesArray));
@@ -15,7 +15,7 @@ function* fetchCategoriesAsync() {
   }
 }
 
-function* onFetchCategories() {
+export function* onFetchCategories() {
   yield* takeLatest(fetchCategoriesStart.type, fetchCategoriesAsync);
 }
 

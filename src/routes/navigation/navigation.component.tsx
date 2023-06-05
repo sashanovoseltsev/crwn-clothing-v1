@@ -16,7 +16,7 @@ import {
   NavLink,
 } from "./navigation.styles";
 
-import { selectCartIsOpened, selectTotalItems, selectCartItems } from '../../store/cart/cart.selectors';
+import { selectCartIsOpened, selectCartItems } from '../../store/cart/cart.selectors';
 import { toggleCartOpened } from '../../store/cart/cart.action';
 
 const Navigation = () => {
@@ -24,10 +24,7 @@ const Navigation = () => {
   const dispatch = useDispatch();
 
   const currentUser = useSelector(selectCurrentUser);
-  
-  const items = useSelector(selectCartItems);
   const isOpened = useSelector(selectCartIsOpened);
-  const cartTotalItems = useSelector(selectTotalItems);
 
   const handleSignOut = async () => {
     dispatch(signOut());
@@ -35,7 +32,7 @@ const Navigation = () => {
 
   return (
     <>
-      <NavigationContainer>
+      <NavigationContainer isOpened={isOpened}>
         <LogoContainer to="/">
           <CrwnLogo className="navigation__logo" />
         </LogoContainer>
@@ -49,12 +46,10 @@ const Navigation = () => {
             <NavLink to="/auth">{"sign in "}</NavLink>
           )}
           <CartIcon
-            count={cartTotalItems}
             onClickHandler={() => dispatch(toggleCartOpened())}
           />
         </LinkContainer>
-        <CartDropdown
-          cartItems={[...items.values()]}
+        <CartDropdown 
           isOpened={isOpened}
         />
       </NavigationContainer>

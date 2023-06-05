@@ -1,13 +1,27 @@
 import styled from "styled-components";
+import { css } from "styled-components";
 
 import { Link } from "react-router-dom";
 
-export const NavigationContainer = styled.div`
+export type NavigationContainerProps = {
+  isOpened: boolean;
+}
+
+export const NavigationContainer = styled.div<NavigationContainerProps>`
   height: 7rem;
   width: 100%;
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
+
+  z-index: 10000;
+  background-color: rgba(255, 255, 255, .8);
+
+  ${(props) =>
+    props.isOpened && css`
+    position: sticky;
+    top: 0px;`
+  }
 `;
 
 export const LogoContainer = styled(Link)`

@@ -7,14 +7,14 @@ import {
   fetchCategoriesSucceeded,  
   fetchCategoriesFailed} from './categories.action';
 
-const INITIAL_STATE: CategoryState = {
+export const CATEGORY_INITIAL_STATE: CategoryState = {
   categoriesArray: [],
   isLoading: false,
   error: null
 }
 
 export const categoriesReducer = (
-  state = INITIAL_STATE,
+  state = CATEGORY_INITIAL_STATE,
   action: AnyAction
 ): CategoryState => {
   if (fetchCategoriesStart.match(action)) {

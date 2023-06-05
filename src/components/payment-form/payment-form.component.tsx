@@ -6,10 +6,9 @@ import { StripeCardElement } from '@stripe/stripe-js';
 import { selectTotalPrice } from '../../store/cart/cart.selectors';
 import { selectCurrentUser } from '../../store/user/user.selectors';
 
-import Button, { BUTTON_TYPES } from '../button/button.component';
+import { BUTTON_TYPES } from '../button/button.component';
 
 import { PaymentFormContainer, FormContainer, PaymentButton } from './payment-form.styles';
-import { current } from '@reduxjs/toolkit';
 
 const ifValidCardElement = (card: StripeCardElement | null): card is StripeCardElement => card !== null;
 

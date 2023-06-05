@@ -1,4 +1,5 @@
-import { compose, createStore, applyMiddleware, Middleware } from 'redux';
+import { compose, applyMiddleware, Middleware } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 
 import { persistStore, persistReducer, PersistConfig } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -34,13 +35,13 @@ const middleWares = [process.env.NODE_ENV !== 'production' && loggerMiddleware,
   sagaMiddleware]
 .filter((middleware): middleware is Middleware => Boolean(middleware));
 
-const composeEnhancers = (process.env.NODE_ENV !== 'production' &&
-  window && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) 
- || compose;
+// const composeEnhancers = (process.env.NODE_ENV !== 'production' &&
+//   window && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) 
+//  || compose;
 
-const composedEnhancers = composeEnhancers(applyMiddleware(...middleWares));
+// const composedEnhancers = composeEnhancers(applyMiddleware(...middleWares));
 
-export const store = createStore(persistedReducer, undefined, composedEnhancers);
+export const store = configureStore({ reducer: persistedReducer, middleware: middleWares });
 
 // export const store = configureStore({
 //   reducer: persistedReducer,

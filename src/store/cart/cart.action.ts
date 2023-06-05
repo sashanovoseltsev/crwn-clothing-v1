@@ -33,7 +33,8 @@ function addItem(items: Map<string, CartItem>, item: CategoryItem): Map<string, 
   if (!foundItem) {
     items.set(id, { ...item, qnt: 1 });
   } else {
-    items.set(id, { ...foundItem, qnt: ++foundItem.qnt });
+    items.set(id, { ...foundItem, qnt: foundItem.qnt + 1 });
+    //foundItem.qnt += 1; // this causes a lot of troubles with re-rendering (esp. when using React.memo) cause it doesn't change items ref.
   }
   
   return items;

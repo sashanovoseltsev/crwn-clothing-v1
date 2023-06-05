@@ -20,6 +20,39 @@ const CartItem: FC<CartItemProps> = memo(({ item }) => {
       </div>
     </CartItemContainer>
   );
-});
+}, 
+  ({ item: prevItem}, {item: nextItem}) => {
+      return prevItem.id === nextItem.id &&
+          prevItem.name === nextItem.name &&
+          prevItem.price === nextItem.price &&
+          prevItem.qnt === nextItem.qnt &&
+          prevItem.imageUrl === nextItem.imageUrl;
+  }
+);
 
 export default CartItem;
+
+
+// , (prevProps, nextProps) => {
+//   if (prevProps !== nextProps) {
+//     console.log(prevProps, nextProps);
+//     return false
+//   }
+//   else {
+//     return prevProps.item.id === nextProps.item.id &&
+//     prevProps.item.name === nextProps.item.name &&
+//     prevProps.item.price === nextProps.item.price &&
+//     prevProps.item.qnt === nextProps.item.qnt &&
+//     prevProps.item.imageUrl === nextProps.item.imageUrl;
+//   } 
+// }
+
+// ({ item: prevItem}, {item: nextItem}) => {
+//   console.log(prevItem, nextItem);
+//   console.log('items equal', prevItem === prevItem);
+//     return prevItem.id === nextItem.id &&
+//         prevItem.name === nextItem.name &&
+//         prevItem.price === nextItem.price &&
+//         prevItem.qnt === nextItem.qnt &&
+//         prevItem.imageUrl === nextItem.imageUrl;
+// }
