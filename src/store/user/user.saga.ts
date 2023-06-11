@@ -2,7 +2,19 @@ import { takeLatest, put, all, call } from 'typed-redux-saga/macro';
 
 import { USER_ACTION_TYPES } from './user.types';
 
-import { signInSuccess, signUpWithEmailSuccessAction, authenticationError, AuthenticationError, SignUpEmailStart, SignUpEmailSucess, SignInEmailStart } from './user.action';
+import { signInSuccess, 
+  signOut,
+  signUpWithEmailSuccessAction, 
+  signUpWithEmailAndPasswordStart,
+  authenticationError, 
+  googleSignInStart,
+  emailSignInStart,
+  checkUserSession,
+  AuthenticationError, 
+  SignUpEmailStart, 
+  SignUpEmailSucess, 
+  SignInEmailStart } from './user.action';
+
 import { getCurrentUser, 
   createUserDocumentFromAuth, 
   signInWithGooglePopup, 
@@ -18,7 +30,7 @@ export function* isUserAuthenticated() {
     if (!userAuth) return;
     const userSnapshot = yield* call(createUserDocumentFromAuth, userAuth);
     if (userSnapshot) {
-      yield* put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data()}));
+      yield* put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
     }
   } catch (error) {
     yield* put(authenticationError(error as Error));
@@ -26,7 +38,7 @@ export function* isUserAuthenticated() {
 }
 
 export function* onCheckUserSession() {
-  yield* takeLatest(USER_ACTION_TYPES.CHECK_USER_SESSION, isUserAuthenticated)
+  yield* takeLatest(checkUserSession.type, isUserAuthenticated)
 }
 
 export function* signInAuthUserWithEmailPasswordAsync({ payload: { email, password}}: SignInEmailStart) {
@@ -43,7 +55,7 @@ export function* signInAuthUserWithEmailPasswordAsync({ payload: { email, passwo
 }
 
 export function* onSignInWithEmailAndPassword() {
-  yield* takeLatest(USER_ACTION_TYPES.EMAIL_SIGN_IN_START, signInAuthUserWithEmailPasswordAsync);
+  yield* takeLatest(emailSignInStart.type, signInAuthUserWithEmailPasswordAsync);
 }
 
 export function* signInWithGoogleAsync() {
@@ -60,23 +72,23 @@ export function* signInWithGoogleAsync() {
 }
 
 export function* onSignInWithGoogle() {
-  yield* takeLatest(USER_ACTION_TYPES.GOOGLE_SIGN_IN_START, signInWithGoogleAsync);
+  yield* takeLatest(googleSignInStart.type, signInWithGoogleAsync);
 }
 
 export function* signOutUserAsync() {
-  yield* call(signOutUser);
-}
-
-export function* onSignOut() {
   try {
-    yield* takeLatest(USER_ACTION_TYPES.SIGN_OUT, signOutUserAsync);
+    yield* call(signOutUser);
   } catch (error) {
     yield* put(authenticationError(error as Error));
   }
 }
 
-export function* authenticationErrorHandler({ payload: error }: AuthenticationError) {
-  switch (error.code) {
+export function* onSignOut() {
+  yield* takeLatest(signOut.type, signOutUserAsync);
+}
+
+export function* authenticationErrorHandler({ payload: { error: e } }: AuthenticationError) {
+  switch (e.code) {
     case "auth/wrong-password":
       alert("Incorrect credentials.");
       break;
@@ -87,13 +99,13 @@ export function* authenticationErrorHandler({ payload: error }: AuthenticationEr
       alert("Cannot create user. Email already in use.");
       break;
     default:
-      alert(error);
+      alert(e);
       break;
   }
-  console.error(error);
+  console.error(e);
 }
 
-export function* signUpWithEmailAsync({ payload: { email, password, displayName}}: SignUpEmailStart) {
+export function* signUpWithEmail({ payload: { email, password, displayName}}: SignUpEmailStart) {
   try {
     const userCredetials = yield* call(createAuthUserWithEmailAndPassword, email, password);
     if (userCredetials) {
@@ -117,15 +129,15 @@ export function* signUpWithEmailSuccess({ payload: {user, additionalDetails}}: S
 }
 
 export function* onSignUpWithEmailSuccess() {
-  yield* takeLatest(USER_ACTION_TYPES.SIGN_UP_EMAIL_SUCCESS, signUpWithEmailSuccess);
+  yield* takeLatest(signUpWithEmailSuccessAction.type, signUpWithEmailSuccess);
 }
 
 export function* onSignUpWithEmail() {
-  yield* takeLatest(USER_ACTION_TYPES.SIGN_UP_EMAIL_START, signUpWithEmailAsync);
+  yield* takeLatest(signUpWithEmailAndPasswordStart.type, signUpWithEmail);
 }
 
 export function* onAuthenticationError() {
-  yield* takeLatest(USER_ACTION_TYPES.AUTHENTICATION_ERROR, authenticationErrorHandler);
+  yield* takeLatest(authenticationError.type, authenticationErrorHandler);
 }
 
 export function* userSaga() {

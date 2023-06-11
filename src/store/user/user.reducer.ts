@@ -8,20 +8,20 @@ import { authenticationError,
   signUpWithEmailSuccessAction } from './user.action';
 import { UserState, } from './user.types';
 
-const INITIAL_STATE: UserState = {
+export const USER_INITIAL_STATE: UserState = {
   currentUser: null,
   isLoading: false,
   error: null
 }
 
 export const userReducer = (
-  state = INITIAL_STATE, 
+  state = USER_INITIAL_STATE, 
   action: AnyAction): UserState => {
 
   if (signInSuccess.match(action)) {
     return {
       ...state,
-      currentUser: action.payload,
+      currentUser: action.payload.user,
       isLoading: false
     };
   }
@@ -29,7 +29,7 @@ export const userReducer = (
   if (authenticationError.match(action)) {
     return {
       ...state,
-      error: action.payload,
+      error: action.payload.error,
       isLoading: false
     }
   }

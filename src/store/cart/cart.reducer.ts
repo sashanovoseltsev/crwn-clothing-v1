@@ -3,13 +3,13 @@ import { createTransform } from 'redux-persist';
 import { CartState } from "./cart.types";
 import { toggleCartOpened, setCartItems } from "./cart.action";
 
-const INITIAL_VALUE: CartState = {
+export const CART_INITIAL_VALUE: CartState = {
   isOpened: false,
   items: new Map()
 }
 
 export const cartReducer = (
-  state = INITIAL_VALUE,
+  state = CART_INITIAL_VALUE,
   action: AnyAction
 ): CartState => {
   if (toggleCartOpened.match(action)) {
