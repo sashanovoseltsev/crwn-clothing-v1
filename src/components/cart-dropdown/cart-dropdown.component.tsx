@@ -7,6 +7,9 @@ import Button from "../button/button.component";
 import CartItem from "../cart-item/cart-item.component";
 
 import { useNavigate, useLocation } from "react-router-dom";
+// import reactRouterDomMocked from "./__tests__/react-router-dom-mocked";
+// import { useLocation } from "react-router-dom";
+
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { toggleCartOpened } from '../../store/cart/cart.action';
@@ -17,6 +20,7 @@ export type CartDropDownProps = {
 }
 
 const CartDropdown: FC<CartDropDownProps> = ({ isOpened }) => {
+  //const navigate = reactRouterDomMocked.useNavigate();
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -25,6 +29,7 @@ const CartDropdown: FC<CartDropDownProps> = ({ isOpened }) => {
 
   const [prevLocation, setPrevLocation] = useState(location.pathname);
 
+  // This is required to automatically close cart-dropdown when user navigates to other location
   useEffect(() => {
     if (isOpened && prevLocation !== location.pathname) {
       dispatch(toggleCartOpened());
