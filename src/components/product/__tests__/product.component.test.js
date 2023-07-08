@@ -1,5 +1,4 @@
-import { screen, fireEvent } from '@testing-library/react';
-import { act } from '@testing-library/react';
+import { act, screen, fireEvent } from '@testing-library/react';
 import { renderWithProviders } from '../../../utils/test/test.utils';
 import Product from '../product.component';
 
@@ -51,10 +50,10 @@ describe('Product Card tests',  () => {
     }
 
     const { store } = renderWithProviders(<Product product={mockProduct} />, { preloadedState });
-    act(() => {
+    // act(() => {
       store.dispatch(addItemToCart(cartItems, mockProduct));
       store.dispatch(addItemToCart(cartItems, mockProduct));
-    });
+    // });
 
     const addToCartButtonElement = screen.getByText(/add to cart/i);
     await fireEvent.click(addToCartButtonElement);

@@ -6,11 +6,14 @@ const color = {
   main: "black",
 };
 
-const shrinkLabel = css`
-  top: -1.4rem;
-  font-size: 1.2rem;
-  color: $main-color;
+export const shrinkLabel = css`
+    top: -1.4rem;
+    font-size: 1.2rem;
+    color: ${color.main};
 `;
+
+// move shrinkLabel css into a class
+// assign class based on props.shrink
 
 type FormInputLabelProps = {
   shrink?: boolean;
