@@ -1,4 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { act, render, screen, fireEvent} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import FormInput from '../form-input.component';
 import { shrinkLabel } from '../form-input.styles';
@@ -40,7 +41,3 @@ describe('FormInput component tests', () => {
     });
   });
 })
-
-// top: -1.4rem;
-// font-size: 1.2rem;
-// color: ${color.main};

@@ -24,6 +24,7 @@ const SignIn = () => {
 
   const signInWithGoogle = async () => {
     dispatch(googleSignInStart());
+    resetFormFields();
   };
 
   const handleFormSubmitted = async (event: FormEvent<HTMLFormElement>) => {
