@@ -47,7 +47,7 @@ describe('SignIn component tests', () => {
 
     // const mockUseDispatch = useDispatch;
     const mockDispatch = jest.fn();
-    useDispatch.mockReturnValue(mockDispatch);
+    useDispatch.mockReturnValue(mockDispatch); 
 
     const btnElems = screen.getAllByRole('button');
     const signInBtnElem = btnElems.filter(btn => btn.innerHTML.toLowerCase() === "sign in")[0];
