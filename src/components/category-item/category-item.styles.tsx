@@ -36,6 +36,11 @@ export const CategoryShopNowLink = styled(Link)`
     color: #4a4a4a;
   }
 
+  &:hover,
+  &:active {
+    opacity: .8;
+  }
+
   h2 {
     font-weight: bold;
     margin: 0 0.6rem 0;
@@ -65,10 +70,6 @@ export const CategoryContainer = styled.div`
     & ${CategoryImage} {
       transform: scale(1.1);
       transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
-    }
-
-    & ${CategoryShopNowLink} {
-      opacity: 0.9;
-    }
+    } 
   }
 `;
