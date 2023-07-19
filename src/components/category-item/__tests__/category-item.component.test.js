@@ -1,17 +1,13 @@
 import { screen, render, fireEvent } from '@testing-library/react';
 
 import { BrowserRouter } from 'react-router-dom';
-import * as reactRouterDom from 'react-router-dom';
 import CategoryItem from '../category-item.component';
 
-jest.mock('react-router-dom', () => ({
-  __esModule: true,
-  ...jest.requireActual('react-router-dom')
-}));
+import { renderWithProviders, generateTestCategory } from '../../../utils/test/test.utils';
 
 describe('CategoryItem test', () => {
   test('It should render correctly with category provided', () => {
-    const category = generateTestCategory();
+    const category = generateTestCategory('cat1');
 
     const { container } = render(<BrowserRouter>
       <CategoryItem category={category}/>
@@ -24,53 +20,19 @@ describe('CategoryItem test', () => {
     const titleElem = screen.getByText(category.title);
     expect(titleElem).toBeInTheDocument();
 
-    const shopNowElem = screen.getByText(/shop now/i);
+    const shopNowElem = screen.getByRole('link', { name: /shop now/i});
     expect(shopNowElem).toBeInTheDocument();
   })
 
-  test('it should navigate to correct route when Category is clicked', () => {
-    const category = generateTestCategory();
-    
-    const mockNavigate = jest.fn();
-    const mockUseNavigate = jest.spyOn(reactRouterDom, 'useNavigate');
-    mockUseNavigate.mockReturnValue(mockNavigate);
+  test('it should have shop now link with correct href', () => {
+    const category = generateTestCategory('cat1');
 
-    const { container } = render(<BrowserRouter>
-      <CategoryItem category={category}/>
-    </BrowserRouter>);
+    renderWithProviders(<CategoryItem category={category}/>);
 
+    const shopNowLink = screen.getByRole('link', { name: /shop now/i});
 
-    const categoryElem = container.firstChild;
+    expect(shopNowLink).toHaveAttribute('href', '/' + category.route);
 
-    fireEvent.click(categoryElem);
-
-    expect(mockNavigate).toBeCalledWith(category.route);
+    fireEvent.click(shopNowLink);
   })
 })
-
-function generateTestCategory() {
-  const items1 = [
-    {
-      id: '1',
-      name: 'Item 1',
-      price: 10,
-      imageUrl: 'http://testhost.com/url1'
-    },
-    {
-      id: '2',
-      name: 'Item 2',
-      price: 20,
-      imageUrl: 'http://testhost.com/url2'
-    }
-  ];
-
-  const category1 = {
-    id: 'cat1',
-    title: 'cat1',
-    route: 'shop/cat1',
-    imageUrl: 'http://testhost.com/cat1',
-    items: items1
-  };
-
-  return category1;
-}

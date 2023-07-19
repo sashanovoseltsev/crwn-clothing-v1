@@ -3,6 +3,8 @@ import { screen } from '@testing-library/react';
 import Category from '../category.component';
 import { renderWithProviders } from '../../../utils/test/test.utils';
 
+import { generateTestCategory } from '../../../utils/test/test.utils';
+
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useParams: () => ({
@@ -41,27 +43,20 @@ describe('Category tests', () => {
   });
 
   test('It should render category items', () => {
+    const category = generateTestCategory('mens')
     renderWithProviders(<Category />, {
       preloadedState: {
         categories: {
           isLoading: false,
-          categoriesArray: [
-            {
-              title: 'mens',
-              items: [
-                { id: 1, name: 'Product 1', price: 20, imageUrl: "url1" },
-                { id: 2, name: 'Product 2', price: 40, imageUrl: "url2"}
-              ],
-            }
-          ]
+          categoriesArray: [category]
         }
       }
     });
     
-    const p1Elem = screen.getByText('Product 1');
+    const p1Elem = screen.getByText(new RegExp(category.items[0].name, 'i'));
     expect(p1Elem).toBeInTheDocument();
 
-    const p2Elem = screen.getByText('Product 2');
+    const p2Elem = screen.getByText(new RegExp(category.items[1].name, 'i'));
     expect(p2Elem).toBeInTheDocument();
   });
 });

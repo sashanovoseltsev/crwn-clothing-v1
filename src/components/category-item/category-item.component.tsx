@@ -1,10 +1,8 @@
 import {
   CategoryContainer,
   CategoryImage,
-  CategoryBody,
-} from "./category-item.styles";
+  CategoryShopNowLink} from "./category-item.styles";
 
-import { useNavigate } from "react-router-dom";
 import { Category } from "../../store/categories/categories.types";
 
 export type CategoryItemProps = {
@@ -14,15 +12,13 @@ export type CategoryItemProps = {
 const CategoryItem = ({ category }: CategoryItemProps) => {
   const { title, imageUrl, route } = category;
 
-  const navigate = useNavigate();
-
   return (
-    <CategoryContainer onClick={() => navigate(route)}>
+    <CategoryContainer>
       <CategoryImage url={imageUrl} />
-      <CategoryBody>
+      <CategoryShopNowLink to={route}>
         <h2>{title}</h2>
         <p>Shop now</p>
-      </CategoryBody>
+      </CategoryShopNowLink>
     </CategoryContainer>
   );
 };

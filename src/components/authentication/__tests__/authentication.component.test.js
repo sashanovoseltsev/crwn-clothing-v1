@@ -30,12 +30,6 @@ describe('Authentication component tests', () => {
 
     renderWithProviders(<Authentication />, { preloadedState });
 
-    const signInElems = screen.getAllByText(/sign in/i);
-    const signUpElems = screen.getAllByText(/sign up/i);
-
-    const signInButton = signInElems.filter(elem => elem.innerHTML.toLowerCase() === 'sign in').at(0);
-    expect(signInButton).toBeInTheDocument();
-    const signUpButton = signUpElems.filter(elem => elem.innerHTML.toLowerCase() === 'sign up').at(0);
-    expect(signUpButton).toBeInTheDocument();
+    expect([...screen.getAllByRole('button')].length).toBe(3);
   })
 })

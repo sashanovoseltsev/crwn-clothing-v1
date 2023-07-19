@@ -5,6 +5,8 @@ import * as reactRouterDom from 'react-router-dom';
 import { renderWithProviders } from '../../../utils/test/test.utils';
 import CategoryPreview from '../category-preview.component';
 
+import { generateTestCategoryItem } from '../../../utils/test/test.utils';
+
 // prepare jest.spyOn
 jest.mock('react-router-dom', () => (
   {
@@ -14,43 +16,31 @@ jest.mock('react-router-dom', () => (
 
 describe('CategoryPreview tests', () => {
   test('it should render correctly with title and products provided', () => {
-    const title = 'Category 1';
-    const items = generateTestCategoryItems();
-    const preloadedState = {
-      cart: {
-        items: new Map(),
-        isOpened: false
-      }
-    };
+    const categoryTitle = 'Category 1';
+    const items = [generateTestCategoryItem('1'), generateTestCategoryItem('2')];
 
-    renderWithProviders(<CategoryPreview title={title} products={items}/>, { preloadedState });
+    renderWithProviders(<CategoryPreview title={categoryTitle} products={items}/>);
 
     const btnElem = screen.getByRole('button');
     expect(btnElem).toBeInTheDocument();
-    expect(btnElem.innerHTML.toLocaleLowerCase()).toEqual(title.toLocaleLowerCase());
+    expect(btnElem.innerHTML.toLocaleLowerCase()).toEqual(categoryTitle.toLocaleLowerCase());
 
-    const item1Elem = screen.getByText(/item 1/i);
+    const item1Elem = screen.getByText(new RegExp(items[0].name, 'i'));
     expect(item1Elem).toBeInTheDocument();
 
-    const item2Elem = screen.getByText(/item 2/i);
+    const item2Elem = screen.getByText(new RegExp(items[1].name, 'i'));
     expect(item2Elem).toBeInTheDocument();
   })
 
   test('it should navigate to correct route when category title btn is clicked', () => {
     const title = 'Category 1';
-    const items = generateTestCategoryItems();
-    const preloadedState = {
-      cart: {
-        items: new Map(),
-        isOpened: false
-      }
-    };
+    const items = [generateTestCategoryItem('1'), generateTestCategoryItem('2')];
 
     const mockNavigate = jest.fn();
     const mockUseNavigate = jest.spyOn(reactRouterDom, 'useNavigate');
     mockUseNavigate.mockReturnValue(mockNavigate);
 
-    renderWithProviders(<CategoryPreview title={title} products={items}/>, { preloadedState });
+    renderWithProviders(<CategoryPreview title={title} products={items}/>);
 
     const btnElem = screen.getByRole('button');
     fireEvent.click(btnElem);
@@ -60,23 +50,3 @@ describe('CategoryPreview tests', () => {
     jest.restoreAllMocks();
   })
 })
-
-
-function generateTestCategoryItems() {
-  const items = [
-    {
-      id: '1',
-      name: 'Item 1',
-      price: 10,
-      imageUrl: 'http://testhost.com/url1'
-    },
-    {
-      id: '2',
-      name: 'Item 2',
-      price: 20,
-      imageUrl: 'http://testhost.com/url2'
-    }
-  ];
-
-  return items;
-}

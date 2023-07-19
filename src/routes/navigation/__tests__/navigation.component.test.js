@@ -5,6 +5,13 @@ import { renderWithProviders } from '../../../utils/test/test.utils';
 import * as firebaseUtils from '../../../utils/firebase/firebase.utils';
 
 describe('Navigation tests', () => {
+
+  test('It should render Shop link', () => {
+    renderWithProviders(<Navigation />);
+    const signInLink = screen.getByRole('link', { name: /shop/i});
+    expect(signInLink).toBeInTheDocument();
+  })
+
   test('It should render Sign In button if no user is provided', () => {
     const preloadedState = {
       user: {
@@ -13,7 +20,7 @@ describe('Navigation tests', () => {
     };
 
     renderWithProviders(<Navigation />, { preloadedState });
-    const signInLink = screen.getByText(/sign in/i);
+    const signInLink = screen.getByRole('link', { name: /sign in/i});
     expect(signInLink).toBeInTheDocument();
 
     const signOutLinkElement = screen.queryByText(/sign out/i);
@@ -28,11 +35,11 @@ describe('Navigation tests', () => {
     };
 
     renderWithProviders(<Navigation />, { preloadedState });
-    const signInLink = screen.getByText(/sign out/i);
-    expect(signInLink).toBeInTheDocument();
+    const signOutLink = screen.getByRole('button', { name: /sign out/i });
+    expect(signOutLink).toBeInTheDocument();
 
-    const signInLinkElement = screen.queryByText(/sign in/i);
-    expect(signInLinkElement).toBeNull();
+    const signInLink = screen.queryByRole('button', { name: /sign in/i  });
+    expect(signInLink).toBeNull();
   })
 
   test('It should render visible empty cart dropdown if cart is opened', () => {
@@ -44,7 +51,7 @@ describe('Navigation tests', () => {
     };
 
     renderWithProviders(<Navigation />, { preloadedState });
-    const goToCheckOutBtnElement = screen.getByText(/go to checkout/i);
+    const goToCheckOutBtnElement = screen.getByRole('button', { name: /go to checkout/i });
     expect(goToCheckOutBtnElement).toBeVisible();
     expect(goToCheckOutBtnElement).toBeInTheDocument();
 
@@ -90,7 +97,7 @@ describe('Navigation tests', () => {
 
     var state = store.getState();
     expect(state.user.currentUser).toEqual({});
-    const signOutLinkElement = screen.getByText(/sign out/i);
+    const signOutLinkElement = screen.getByRole('button', { name: /sign out/i });
     expect(signOutLinkElement).toBeInTheDocument();
     
     await fireEvent.click(signOutLinkElement);

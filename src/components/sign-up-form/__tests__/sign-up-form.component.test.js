@@ -6,6 +6,8 @@ import { USER_ACTION_TYPES } from '../../../store/user/user.types';
 import { renderWithProviders } from '../../../utils/test/test.utils';
 import SignUp from '../sign-up-form.component';
 
+import { signUpWithEmailAndPasswordStart } from '../../../store/user/user.action';
+
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn()
@@ -20,9 +22,8 @@ describe('SignUp component tests', () => {
     expect(screen.getByLabelText(/^password$/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/confirm password/i)).toBeInTheDocument();
 
-    const signUpBtnElem = screen.getByRole('button');
+    const signUpBtnElem = screen.getByRole('button', { name: /^sign up$/i});
     expect(signUpBtnElem).toBeInTheDocument();
-    expect(signUpBtnElem.innerHTML.toLowerCase()).toEqual("sign up");
   })
 
   test('It should dispatch signUpWithEmailAndPasswordStart action when sign up is hit and all inputs are set', () => {
@@ -32,7 +33,7 @@ describe('SignUp component tests', () => {
     const mockDispatch = jest.fn();
     mockUseDispatch.mockReturnValue(mockDispatch);
 
-    const signUpBtnElem = screen.getByRole('button');
+    const signUpBtnElem = screen.getByRole('button', { name: /^sign up$/i});
 
     const displayNameInput = screen.getByLabelText(/display name/i);
     const emailInput = screen.getByLabelText(/email/i);
@@ -51,11 +52,7 @@ describe('SignUp component tests', () => {
 
     fireEvent.click(signUpBtnElem);
 
-    expect(mockDispatch).toHaveBeenCalledWith({ type: USER_ACTION_TYPES.SIGN_UP_EMAIL_START, 
-      payload: { 
-        email: 'user@email.com', 
-        password: 'pswd', 
-        displayName: 'user' } });
+    expect(mockDispatch).toHaveBeenCalledWith(signUpWithEmailAndPasswordStart('user@email.com', 'pswd', 'user'));
 
     expect(displayNameInput).toHaveValue('');
     expect(emailInput).toHaveValue('');
@@ -63,14 +60,14 @@ describe('SignUp component tests', () => {
     expect(confirmPasswordInput).toHaveValue('');
   })
 
-  test('It should not dispatch signUpWithEmailAndPasswordStart action when sign up and passwords are not correct', () => {
+  test('It should not dispatch signUpWithEmailAndPasswordStart action when passwords are not correct', () => {
     renderWithProviders(<SignUp />);
 
     const mockUseDispatch = useDispatch;
     const mockDispatch = jest.fn();
     mockUseDispatch.mockReturnValue(mockDispatch);
 
-    const signUpBtnElem = screen.getByRole('button');
+    const signUpBtnElem = screen.getByRole('button', { name: /^sign up$/i});
 
     const displayNameInput = screen.getByLabelText(/display name/i);
     const emailInput = screen.getByLabelText(/email/i);

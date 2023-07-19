@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import SignIn from '../sign-in-form.component';
 import { renderWithProviders } from '../../../utils/test/test.utils';
 import { USER_ACTION_TYPES } from '../../../store/user/user.types';
+import { emailSignInStart, googleSignInStart } from '../../../store/user/user.action';
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -15,24 +16,14 @@ describe('SignIn component tests', () => {
   test('It should render correctly', () => {
     renderWithProviders(<SignIn />);
 
-    const btnElems = screen.getAllByRole('button');
-    const signInBtnElem = btnElems.filter(btn => btn.innerHTML.toLowerCase() === "sign in")[0];
-    expect(signInBtnElem).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^sign in$/i})).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^google sign in$/i})).toBeInTheDocument();
 
-    const googleSignInBtnElem = btnElems.filter(btn => btn.innerHTML.toLowerCase() === "google sign in")[0];
-    expect(googleSignInBtnElem).toBeInTheDocument();
+    expect(screen.getByText(/email/i, { selector: 'label' })).toBeInTheDocument();
+    expect(screen.getByText(/password/i, { selector: 'label' })).toBeInTheDocument();
 
-    const emailLabelElem = screen.getByText(/email/i, { selector: 'label' });
-    expect(emailLabelElem).toBeInTheDocument();
-    
-    const pswdLabelElem = screen.getByText(/password/i, { selector: 'label' });
-    expect(pswdLabelElem).toBeInTheDocument();
-
-    const emailInput = screen.getByLabelText(/email/i);
-    expect(emailInput).toBeInTheDocument();
-    
-    const pswdInput = screen.getByLabelText(/password/i);
-    expect(pswdInput).toBeInTheDocument();
+    expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
   })
 
   test('It should dispatch emailSignInAction when sign in button is clicked and reset email and pswd inputs', () => {
@@ -49,12 +40,10 @@ describe('SignIn component tests', () => {
     const mockDispatch = jest.fn();
     useDispatch.mockReturnValue(mockDispatch); 
 
-    const btnElems = screen.getAllByRole('button');
-    const signInBtnElem = btnElems.filter(btn => btn.innerHTML.toLowerCase() === "sign in")[0];
+    const signInBtnElem = screen.getByRole('button', { name: /^sign in$/i})
     expect(signInBtnElem).toBeInTheDocument();
 
-    const googleSignInBtnElem = btnElems.filter(btn => btn.innerHTML.toLowerCase() === "google sign in")[0];
-    expect(googleSignInBtnElem).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^google sign in$/i})).toBeInTheDocument();
 
     const emailInput = screen.getByLabelText(/email/i);
     expect(emailInput).toBeInTheDocument();
@@ -70,8 +59,8 @@ describe('SignIn component tests', () => {
     
     fireEvent.click(signInBtnElem);
 
-    expect(mockDispatch).toHaveBeenCalledWith({type: USER_ACTION_TYPES.EMAIL_SIGN_IN_START, payload: { email: 'some@email.com', password: 'pswd'}});
-
+    expect(mockDispatch).toHaveBeenCalledWith(emailSignInStart('some@email.com', 'pswd'));
+    
     expect(emailInput).toHaveValue('');
     expect(pswdInput).toHaveValue('');
 
@@ -92,12 +81,7 @@ describe('SignIn component tests', () => {
     const mockDispatch = jest.fn();
     mockUseDispatch.mockReturnValue(mockDispatch);
 
-    const btnElems = screen.getAllByRole('button');
-    const signInBtnElem = btnElems.filter(btn => btn.innerHTML.toLowerCase() === "sign in")[0];
-    expect(signInBtnElem).toBeInTheDocument();
-
-    const googleSignInBtnElem = btnElems.filter(btn => btn.innerHTML.toLowerCase() === "google sign in")[0];
-    expect(googleSignInBtnElem).toBeInTheDocument();
+    const googleSignInBtnElem = screen.getByRole('button', { name: /^google sign in$/i});
 
     const emailInput = screen.getByLabelText(/email/i);
     expect(emailInput).toBeInTheDocument();
@@ -113,7 +97,7 @@ describe('SignIn component tests', () => {
     
     fireEvent.click(googleSignInBtnElem);
 
-    expect(mockDispatch).toHaveBeenCalledWith({ type: USER_ACTION_TYPES.GOOGLE_SIGN_IN_START });
+    expect(mockDispatch).toHaveBeenCalledWith(googleSignInStart());
 
     expect(emailInput).toHaveValue('');
     expect(pswdInput).toHaveValue('');

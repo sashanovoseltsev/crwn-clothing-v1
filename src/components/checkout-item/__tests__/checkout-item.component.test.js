@@ -2,17 +2,17 @@ import { screen, render, fireEvent } from '@testing-library/react';
 
 import CheckoutItem from '../checkout-item.component';
 
-describe('CheckoutItem tests', () => {
-  test('It should render correctly with cart item provided', () => {
+import { generateTestCartItem } from '../../../utils/test/test.utils';
 
-    const item = {
-        id: '1',
-        name: 'Item 1',
-        price: 10,
-        imageUrl: 'http://testhost.com/url1',
-        qnt: 1
-      };
-      
+describe('CheckoutItem tests', () => {
+
+  var item;
+
+  beforeAll(() => {
+    item = generateTestCartItem('1');
+  })
+
+  test('It should render correctly with cart item provided', () => {      
     render(<CheckoutItem item={item} changeQuantity={() => {}} removeItem={() => {}} />);
     
     const imgElem = screen.getByRole('img');
@@ -30,15 +30,7 @@ describe('CheckoutItem tests', () => {
     expect(priceElem).toBeInTheDocument();
   })
 
-  test('It should correctly handle all btn clicks', () => {
-    const item = {
-      id: '1',
-      name: 'Item 1',
-      price: 10,
-      imageUrl: 'http://testhost.com/url1',
-      qnt: 1
-    };
-  
+  test('It should correctly handle all btn clicks', () => {  
     const mockChangeQnt = jest.fn();
     const mockRemoveItem = jest.fn();
     render(<CheckoutItem item={item} changeQuantity={mockChangeQnt} removeItem={mockRemoveItem} />);
