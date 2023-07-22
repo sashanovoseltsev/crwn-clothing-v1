@@ -21,9 +21,8 @@ describe('CategoryPreview tests', () => {
 
     renderWithProviders(<CategoryPreview title={categoryTitle} products={items}/>);
 
-    const btnElem = screen.getByRole('button');
+    const btnElem = screen.getByRole('button', { name: new RegExp(categoryTitle, 'i')});
     expect(btnElem).toBeInTheDocument();
-    expect(btnElem.innerHTML.toLocaleLowerCase()).toEqual(categoryTitle.toLocaleLowerCase());
 
     const item1Elem = screen.getByText(new RegExp(items[0].name, 'i'));
     expect(item1Elem).toBeInTheDocument();
@@ -42,7 +41,7 @@ describe('CategoryPreview tests', () => {
 
     renderWithProviders(<CategoryPreview title={title} products={items}/>);
 
-    const btnElem = screen.getByRole('button');
+    const btnElem = screen.getByRole('button', { name: new RegExp(title, 'i')});
     fireEvent.click(btnElem);
 
     expect(mockNavigate).toBeCalledWith(`/shop/${title}`);

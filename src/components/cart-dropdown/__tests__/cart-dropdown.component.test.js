@@ -42,7 +42,7 @@ describe('CartDropdown Component tests', () => {
     const totalPriceElem = screen.getByText(totalPriceRegExp);
     expect(totalPriceElem).toBeInTheDocument();
 
-    expect(screen.getByRole('button', { value: { text: /go to checkout/i }})).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /go to checkout/i })).toBeInTheDocument();
   })
 
   test('It should render Cart is Empty message if cart is empty', () => { 
@@ -74,7 +74,7 @@ describe('CartDropdown Component tests', () => {
       }
     });
 
-    const goToCheckoutBtnElem = screen.getByRole('button', { value: { text: /go to checkout/i } });
+    const goToCheckoutBtnElem = screen.getByRole('button', { name: /go to checkout/i });
     expect(goToCheckoutBtnElem).toBeInTheDocument();
 
     fireEvent.click(goToCheckoutBtnElem);
@@ -97,7 +97,7 @@ describe('CartDropdown Component tests', () => {
 
     expect(store.getState().cart.isOpened).toBe(true);
 
-    const goToCheckoutBtnElem = screen.getByText(/go to checkout/i);
+    const goToCheckoutBtnElem = screen.getByRole('button', { name: /go to checkout/i });
     expect(goToCheckoutBtnElem).toBeInTheDocument();
 
     fireEvent.click(goToCheckoutBtnElem);
