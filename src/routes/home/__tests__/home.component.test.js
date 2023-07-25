@@ -23,6 +23,10 @@ describe('Home component tests', () => {
 
     const shopNowLinks = screen.getAllByRole('link', { name: /shop now/i})
     expect([...shopNowLinks].length).toBe(categories.length);
+
+    shopNowLinks.forEach((link, i) => {
+      expect(link.firstChild.innerHTML).toBe(categories[i].title);
+    });
   })
 
   test('It should render spinner if categories.isLoading eq. true', () => {

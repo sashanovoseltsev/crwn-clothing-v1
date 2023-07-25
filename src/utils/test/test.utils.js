@@ -4,7 +4,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import { rootReducer } from '../../store/root-reducer';
 import { BrowserRouter } from 'react-router-dom';
 import { MemoryRouter } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
 
 export function renderWithProviders(
   ui,

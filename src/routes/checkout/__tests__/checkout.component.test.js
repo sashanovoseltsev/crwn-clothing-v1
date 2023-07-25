@@ -36,6 +36,6 @@ describe('Checkout component tests', () => {
 
     expect(screen.getByText(/credit/i)).toBeInTheDocument();
     expect(screen.getByRole('form', { name: 'stripe-payment-form' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { value: { text: /pay now/i } })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /pay now/i } )).toBeInTheDocument();
   })
 })

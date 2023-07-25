@@ -27,7 +27,7 @@ describe('Shop component tests', () => {
     })
   })
 
-  test('It should render CategoriesPreview with all categories from state by default', () => {
+  test('It should render CategoriesPreview with only categories specified by route path.', () => {
     const categories = [generateTestCategory('cat1', [generateTestCategoryItem('1'), generateTestCategoryItem('2')]), 
     generateTestCategory('cat2', [generateTestCategoryItem('3'), generateTestCategoryItem('4')])];
 

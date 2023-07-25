@@ -18,7 +18,7 @@ describe('CategoriesPreview component test', () => {
 
     renderWithProviders(<CategoriesPreview />, { preloadedState });
 
-    const catBtnElems = screen.getAllByText(/cat/i, { selector: 'button' });
+    const catBtnElems = screen.getAllByRole('button', { name: /cat/i });
     expect([...catBtnElems].length).toBe(2);
 
     const productImgs = screen.getAllByRole('img');
