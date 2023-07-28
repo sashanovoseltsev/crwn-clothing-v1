@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
-import { productsGrid } from "../../global.styles";
-
 export const CategoryPreviewContainer = styled.div`
   .category-container {
-    ${productsGrid}
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 1.5rem;
+    row-gap: 4rem;
   }
 
   &:not(:last-child) {

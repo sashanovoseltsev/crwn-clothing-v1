@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { productsGrid } from "../../global.styles";
 
 export const CategoryContainer = styled.div`
   h2 {
@@ -9,5 +8,8 @@ export const CategoryContainer = styled.div`
 `;
 
 export const CategoryProducts = styled.div`
-  ${productsGrid}
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 1.5rem;
+  row-gap: 4rem;
 `;

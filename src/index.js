@@ -11,7 +11,7 @@ import App from "./App";
 import { store, persistor } from './store/store';
 import { stripePromise } from './utils/stripe/stripe.utils';
 
-import { GlobalStyles } from "./global.styles";
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 // Required for redux-toolkit to work with Map objects inside states (cart state in particular)
 enableMapSet();
@@ -20,7 +20,6 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <GlobalStyles />
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
           <Elements stripe={stripePromise}>
@@ -31,6 +30,8 @@ root.render(
     </Provider>
   </React.StrictMode>
 );
+
+serviceWorkerRegistration.register();
 
 // NOTE:
 // loading={null} means that nothing inside PersistGate will be rendered until

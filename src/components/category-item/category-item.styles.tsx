@@ -11,6 +11,7 @@ export const CategoryImage = styled.div<CategoryImageProps>`
   height: 100%;
   background-size: cover;
   background-position: center;
+  transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
   ${(props) =>
     props.url &&
     css`
@@ -29,6 +30,7 @@ export const CategoryShopNowLink = styled(Link)`
   background-color: white;
   opacity: 0.7;
   position: absolute;
+  transition: opacity .2s ease-in;
 
   &:link,
   &:visited {
@@ -69,7 +71,12 @@ export const CategoryContainer = styled.div`
 
     & ${CategoryImage} {
       transform: scale(1.1);
-      transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+      /* transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95); */
     } 
   }
+
+  /* &:not(&:hover) ${CategoryImage} {
+    transform: scale(1);
+    transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+  } */
 `;

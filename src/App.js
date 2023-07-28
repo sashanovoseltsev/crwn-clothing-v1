@@ -14,6 +14,8 @@ import { fetchCategoriesStart } from './store/categories/categories.action';
 
 import Spinner from './components/spinner/spinner.component';
 
+import { GlobalStyles } from "./global.styles";
+
 const Home = lazy(() => import("./routes/home/home.component"));
 const Navigation = lazy(() => import("./routes/navigation/navigation.component"));
 const Authentication = lazy(() => import("./components/authentication/authentication.component"));
@@ -39,6 +41,7 @@ const App = () => {
 
   return (
     <Suspense fallback={<Spinner />}>
+      <GlobalStyles />
       <Routes>
         <Route path="/" element={<Navigation />}>
           <Route index={true} element={<Home />} />
