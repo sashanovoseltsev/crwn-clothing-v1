@@ -1,6 +1,10 @@
 # About
-Learning project created during the course https://www.udemy.com/course/complete-react-developer-zero-to-mastery/
+Learning project created during the course https://www.udemy.com/course/complete-react-developer-zero-to-mastery
+
 eCommerce clothing app: react + typescript + redux + firestore + stripe
+
+Link to published app: https://crwn-cloting-react-learning-v1.netlify.app/
+
 
 ## Available Scripts
 
